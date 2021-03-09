@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Sortie{% endblock %}
+{% block title %}Créer une sortie{% endblock %}
+
 
 {% block body %}
-    <h1>Create new Sortie</h1>
 
-    {{ include('sortie/_form.html.twig') }}
+        <!-- Placeholder text from http://hipsteripsum.me/ -->
+            <h1>Créer une sortie</h1>
+            <div class="st-deco" data-icon="&#xf069;"></div>
+            <div class="pure-group">
+                {{ include('sortie/_form.html.twig') }}
+            </div>
+
 
     <a href="{{ path('sortie_index') }}">back to list</a>
 {% endblock %}
