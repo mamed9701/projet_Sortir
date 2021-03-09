@@ -21,7 +21,9 @@ class SortieType extends AbstractType
             ->add('url_photo')
             ->add('organisateur')
             ->add('lieux_no_lieu')
-            ->add('etats_no_etat')
+            ->add('etats_no_etat', null, [
+                'choice_label' => 'libelle'
+            ])
         ;
     }
 

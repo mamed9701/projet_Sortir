@@ -27,6 +27,8 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/new", name="sortie_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
