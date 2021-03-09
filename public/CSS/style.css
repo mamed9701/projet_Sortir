@@ -14,6 +14,10 @@ a {
     font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
 }
 
+.texty{
+    font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
+}
+
 .st-container > input,
 .st-container > a {
     position: fixed;
