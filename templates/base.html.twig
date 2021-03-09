@@ -3,71 +3,61 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
-        <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+{#        <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">#}
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
         <div class="container">
 
-            <div class="st-container">
+                {% block body %}{% endblock %}
+{#                <input type="radio" name="radio-set" id="st-control-4"/>#}
+{#                <a href="#st-panel-4">Positivity</a>#}
+{#                <input type="radio" name="radio-set" id="st-control-5"/>#}
+{#                <a href="#st-panel-5">Passion</a>#}
 
-                <input type="radio" name="radio-set" checked="checked" id="st-control-1"/>
-                <a href="#st-panel-1">Serendipity</a>
-                <input type="radio" name="radio-set" id="st-control-2"/>
-                <a href="#st-panel-2">Happiness</a>
-                <input type="radio" name="radio-set" id="st-control-3"/>
-                <a href="#st-panel-3">Tranquillity</a>
-                <input type="radio" name="radio-set" id="st-control-4"/>
-                <a href="#st-panel-4">Positivity</a>
-                <input type="radio" name="radio-set" id="st-control-5"/>
-                <a href="#st-panel-5">Passion</a>
+{#                <div class="st-scroll">#}
 
-                <div class="st-scroll">
+{#                    <!-- Placeholder text from http://hipsteripsum.me/ -->#}
 
-                    <!-- Placeholder text from http://hipsteripsum.me/ -->
+{#                    <section class="st-panel" id="st-panel-1">#}
+{#                        <div class="st-deco" data-icon="&#xf069;"></div>#}
+{#                        <h2>Créer une sortie</h2>#}
+{#                        <p>Banksy adipisicing eiusmod banh mi sed. Squid stumptown est odd future nisi, commodo mlkshk pop-up adipisicing retro.</p>#}
+{#                    </section>#}
 
-                    <section class="st-panel" id="st-panel-1">
-                        <div class="st-deco" data-icon="&#xf069;"></div>
-                        <h2>Serendipity</h2>
-                        <p>Banksy adipisicing eiusmod banh mi sed. Squid stumptown est odd future nisi, commodo mlkshk pop-up adipisicing retro.</p>
-                    </section>
+{#                    <section class="st-panel st-color" id="st-panel-2">#}
+{#                        <div class="st-deco" data-icon="&#xf118;"></div>#}
+{#                        <h2>Happiness</h2>#}
+{#                        <p>Art party readymade beard labore cosby sweater culpa. Art party whatever incididunt, scenester umami polaroid tofu.</p>#}
+{#                    </section>#}
 
-                    <section class="st-panel st-color" id="st-panel-2">
-                        <div class="st-deco" data-icon="&#xf118;"></div>
-                        <h2>Happiness</h2>
-                        <p>Art party readymade beard labore cosby sweater culpa. Art party whatever incididunt, scenester umami polaroid tofu.</p>
-                    </section>
+{#                    <section class="st-panel" id="st-panel-3">#}
+{#                        <div class="st-deco" data-icon="&#xf0f4;"></div>#}
+{#                        <h2>Tranquillity</h2>#}
+{#                        <p>Sint aute occaecat id vice. Post-ironic fap pork belly next level godard, id fanny pack williamsburg forage truffaut.</p>#}
+{#                    </section>#}
 
-                    <section class="st-panel" id="st-panel-3">
-                        <div class="st-deco" data-icon="&#xf0f4;"></div>
-                        <h2>Tranquillity</h2>
-                        <p>Sint aute occaecat id vice. Post-ironic fap pork belly next level godard, id fanny pack williamsburg forage truffaut.</p>
-                    </section>
+{#                    <section class="st-panel st-color" id="st-panel-4">#}
+{#                        <div class="st-deco" data-icon="&#xf06c;"></div>#}
+{#                        <h2>Positivity</h2>#}
+{#                        <p>Mixtape fap leggings art party, butcher authentic farm-to-table you probably haven't heard of them do labore cosby sweater.</p>#}
+{#                    </section>#}
 
-                    <section class="st-panel st-color" id="st-panel-4">
-                        <div class="st-deco" data-icon="&#xf06c;"></div>
-                        <h2>Positivity</h2>
-                        <p>Mixtape fap leggings art party, butcher authentic farm-to-table you probably haven't heard of them do labore cosby sweater.</p>
-                    </section>
+{#                    <section class="st-panel" id="st-panel-5">#}
+{#                        <div class="st-deco" data-icon="&#xf004;"></div>#}
+{#                        <h2>Passion</h2>#}
+{#                        <p>Fixie ad odd future polaroid dreamcatcher, nesciunt carles bicycle rights accusamus mcsweeney's mumblecore nulla irony.</p>#}
+{#                    </section>#}
 
-                    <section class="st-panel" id="st-panel-5">
-                        <div class="st-deco" data-icon="&#xf004;"></div>
-                        <h2>Passion</h2>
-                        <p>Fixie ad odd future polaroid dreamcatcher, nesciunt carles bicycle rights accusamus mcsweeney's mumblecore nulla irony.</p>
-                    </section>
-
-                </div><!-- // st-scroll -->
+{#                </div><!-- // st-scroll -->#}
 
             </div><!-- // st-container -->
 
