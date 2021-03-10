@@ -70,6 +70,12 @@ class Sortie
      */
     private $etats_no_etat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site_organisateur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -191,6 +197,18 @@ class Sortie
     public function setEtatsNoEtat(?Etat $etats_no_etat): self
     {
         $this->etats_no_etat = $etats_no_etat;
+
+        return $this;
+    }
+
+    public function getSiteOrganisateur(): ?Site
+    {
+        return $this->site_organisateur;
+    }
+
+    public function setSiteOrganisateur(?Site $site_organisateur): self
+    {
+        $this->site_organisateur = $site_organisateur;
 
         return $this;
     }
