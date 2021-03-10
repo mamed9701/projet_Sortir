@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserControllerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +37,52 @@ class UserController implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif;
+
+    /**
+     * @ORM\Column(type="string", length=250, nullable=true)
+     */
+    private $url_photo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Sortie::class)
+     */
+    private $user_sortie;
+
+    public function __construct()
+    {
+        $this->user_sortie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,5 +163,113 @@ class UserController implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getUrlPhoto(): ?string
+    {
+        return $this->url_photo;
+    }
+
+    public function setUrlPhoto(?string $url_photo): self
+    {
+        $this->url_photo = $url_photo;
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getUserSortie(): Collection
+    {
+        return $this->user_sortie;
+    }
+
+    public function addUserSortie(Sortie $userSortie): self
+    {
+        if (!$this->user_sortie->contains($userSortie)) {
+            $this->user_sortie[] = $userSortie;
+        }
+
+        return $this;
+    }
+
+    public function removeUserSortie(Sortie $userSortie): self
+    {
+        $this->user_sortie->removeElement($userSortie);
+
+        return $this;
     }
 }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New UserController{% endblock %}
+
+{% block body %}
+    <h1>Create new UserController</h1>
+
+    {{ include('user_controller/_form.html.twig') }}
+
+    <a href="{{ path('user_controller_index') }}">back to list</a>
+{% endblock %}

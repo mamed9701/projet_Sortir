@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserController{% endblock %}
+
+{% block body %}
+    <h1>UserController</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_controller.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user_controller.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user_controller.roles ? user_controller.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user_controller.password }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user_controller.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ user_controller.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ user_controller.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ user_controller.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{{ user_controller.actif ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Url_photo</th>
+                <td>{{ user_controller.urlPhoto }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_controller_index') }}">back to list</a>
+
+    <a href="{{ path('user_controller_edit', {'id': user_controller.id}) }}">edit</a>
+
+    {{ include('user_controller/_delete_form.html.twig') }}
+{% endblock %}

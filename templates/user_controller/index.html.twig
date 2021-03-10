@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserController index{% endblock %}
+
+{% block body %}
+    <h1>UserController index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Pseudo</th>
+                <th>Telephone</th>
+                <th>Actif</th>
+                <th>Url_photo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_controller in user_controllers %}
+            <tr>
+                <td>{{ user_controller.id }}</td>
+                <td>{{ user_controller.email }}</td>
+                <td>{{ user_controller.roles ? user_controller.roles|json_encode : '' }}</td>
+                <td>{{ user_controller.password }}</td>
+                <td>{{ user_controller.nom }}</td>
+                <td>{{ user_controller.prenom }}</td>
+                <td>{{ user_controller.pseudo }}</td>
+                <td>{{ user_controller.telephone }}</td>
+                <td>{{ user_controller.actif ? 'Yes' : 'No' }}</td>
+                <td>{{ user_controller.urlPhoto }}</td>
+                <td>
+                    <a href="{{ path('user_controller_show', {'id': user_controller.id}) }}">show</a>
+                    <a href="{{ path('user_controller_edit', {'id': user_controller.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_controller_new') }}">Create new</a>
+{% endblock %}
