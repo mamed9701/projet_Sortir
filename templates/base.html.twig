@@ -14,6 +14,32 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container">
+
+                <div class="pure-menu pure-menu-horizontal" id="menu">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item">
+                            <a href="#" class="pure-menu-link">Ville</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="#" class="pure-menu-link">Sites</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="#" class="pure-menu-link">Mon profil</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="#" class="pure-menu-link">Déconnecter</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav><hr>
+
         <div class="container">
                 {% block body %}{% endblock %}
         </div>
