@@ -3,9 +3,43 @@
 {% block title %}New Participant{% endblock %}
 
 {% block body %}
-    <h1>Create new Participant</h1>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-6">
 
-    {{ include('participant/_form.html.twig') }}
+        {# A voir si je fais des messages ou pas #}
+        {# {% for label, messages in app.flashes %} #}
+        {# {% for message in messages %} #}
+        {# <div class="alert alert-{{ label }}" role="alert"> #}
+        {# {{ message }} #}
+        {# </div> #}
+        {# {% endfor %} #}
 
-    <a href="{{ path('participant_index') }}">back to list</a>
-{% endblock %}
+
+        <h1>Mon profil</h1>
+
+        {# {{ include('participant/_form.html.twig') }} #}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+        <div class="form-group">
+            <label class="required" for="Confirmation">Confirmation</label>
+            <input type="text" id="confirmation" name="confirmation" class="form-control" required="required"
+                   maxlength="30">
+        </div>
+
+{#        Faire un type checkbox en allant chercher les villes#}
+        <div class="form-group">
+            <label class="required" for="ville_rattachement">Ville de rattachement</label>
+            <input type="text" id="ville_rattachement" name="ville_rattachement" class="form-control" required="required"
+                   maxlength="30">
+        </div>
+
+{#        faire un champ pour aller chercher la photo de profil#}
+
+        <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+        <button class="btn btn-danger">{{ button_label|default('Annuler') }}</button>
+{#        <button class="btn">{{ button_label|default('Save') }}</button>#}
+        <a href="{{ path('participant_index') }}">back to list</a>
+        {% endblock %}
