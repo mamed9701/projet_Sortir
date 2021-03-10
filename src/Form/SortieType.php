@@ -19,10 +19,7 @@ class SortieType extends AbstractType
             ->add('nb_inscriptions_max')
             ->add('description_infos')
             ->add('url_photo')
-            ->add('organisateur', null, [
-                'choice_label' => 'sites_no_site'
-                ]
-            )
+            ->add('organisateur')
             ->add('lieux_no_lieu')
             ->add('site_organisateur', null, [
                 'choice_label' => 'nom'
