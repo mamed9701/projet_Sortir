@@ -3,21 +3,30 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="texty">
-        <div>
+    <div>
+    <div>
+
     {{   "now"|date("m/d/Y") }}
         <!-- if(participant){ session.nom }-->
         </div>
 
 
         <!-- /à gauche -->
-        <h3>Filtrer les sorties</h3>
+    <h3>Filtrer les sorties</h3>
+        Site :
+            {% for sortie in sorties %}
+                {{ sortie.sites_organisateur }}<!-- Liste déroulante des sites -->
+            {% endfor %}
+    <br><br>
+    Le nom de la sortie contient : <input type="text"><!-- Input -->
+    <br><br>
+        Entre <input type="date"> et <input type="date">
+        <!-- /à gauche-->
 
             <form class="pure-form pure-form-aligned" action="" method="">
                 Site
 
                 <select name="search"><option></option></select><!-- Liste déroulante des sites -->
-
 
                 <br>
                 Le nom de la sortie contient : <input type="text" name="search" class="pure-input-rounded" placeholder="search"><!-- Input -->
@@ -35,7 +44,6 @@
                 <!-- /à droite-->
                 <button class="pure-button pure-button-primary pure-input-rounded">Rechercher</button>
             </form>
-
 <br><br>
 
     <div>
@@ -60,9 +68,10 @@
                 <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d') : '' }}</td>
                 <td>/{{ sortie.nbInscriptionsMax }}</td>
 
-                <td>Etat</td>
+                <td>{{ sortie.etats_no_etat }}</td>
 
                 <td>X</td>
+                
                 <td> Organisateur</td>
                 <td>
                     <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
