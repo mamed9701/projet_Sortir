@@ -3,7 +3,7 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="texty">
+    <div>
     <div>
     {{   "now"|date("m/d/Y") }}
         <!-- if(participant){ session.nom }-->
@@ -12,7 +12,10 @@
     <div>
         <!-- /à gauche -->
     <h3>Filtrer les sorties</h3>
-        Site : <select></select><!-- Liste déroulante des sites -->
+        Site :
+            {% for sortie in sorties %}
+                {{ sortie.sites_organisateur }}<!-- Liste déroulante des sites -->
+            {% endfor %}
     <br><br>
     Le nom de la sortie contient : <input type="text"><!-- Input -->
     <br><br>
@@ -24,7 +27,6 @@
 
         <!-- /à droite-->
     </div>
-
 
 <br><br>
 
@@ -49,7 +51,7 @@
                 <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.nbInscriptionsMax }}</td>
-                <td>{{ sortie.etat }}</td>
+                <td>{{ sortie.etats_no_etat }}</td>
                 <td>Inscrit</td>
                 <td> Organisateur</td>
                 <td>
