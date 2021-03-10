@@ -14,14 +14,19 @@ a {
     font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
 }
 
-.texty{
+.html{
     font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
+}
+
+#menu {
+    float: right;
+    padding: 12px 500px 10px
 }
 
 .st-container > input,
 .st-container > a {
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     width: 20%;
     cursor: pointer;
     font-size: 16px;
