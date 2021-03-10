@@ -33,7 +33,7 @@ class Sortie
     private $duree;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $date_cloture;
 
@@ -53,7 +53,7 @@ class Sortie
     private $url_photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participant::class)
+     * @ORM\ManyToOne(targetEntity=UserController::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
