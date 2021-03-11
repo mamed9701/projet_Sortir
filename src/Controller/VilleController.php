@@ -20,7 +20,7 @@ class VilleController extends AbstractController
      */
     public function index(VilleRepository $villeRepository): Response
     {
-        return $this->render('ville/index.html.twig', [
+        return $this->render('ville/home.html.twig', [
             'villes' => $villeRepository->findAll(),
         ]);
     }

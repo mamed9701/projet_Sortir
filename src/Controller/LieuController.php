@@ -20,7 +20,7 @@ class LieuController extends AbstractController
      */
     public function index(LieuRepository $lieuRepository): Response
     {
-        return $this->render('lieu/index.html.twig', [
+        return $this->render('lieu/home.html.twig', [
             'lieus' => $lieuRepository->findAll(),
         ]);
     }
