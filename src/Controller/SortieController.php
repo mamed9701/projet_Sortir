@@ -4,24 +4,31 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/sortie")
+ * @Route("/")
  */
 class SortieController extends AbstractController
 {
+
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
      */
-    public function index(SortieRepository $sortieRepository): Response
+    public function index(SortieRepository $sortieRepository, SiteRepository $siteRepository, VilleRepository $villeRepository, LieuRepository $lieuRepository): Response
     {
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
+            'sites' => $siteRepository->findAll(),
+            'villes' => $villeRepository->findAll(),
+            'lieux' => $lieuRepository->findAll(),
         ]);
     }
 
