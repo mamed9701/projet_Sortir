@@ -177,7 +177,7 @@ class Sortie
         return $this;
     }
 
-    public function getLieuxNoLieu(): ?Lieu
+    public function getLieuxNolieu(): ?Lieu
     {
         return $this->lieux_no_lieu;
     }
@@ -201,7 +201,7 @@ class Sortie
         return $this;
     }
 
-    public function getSiteOrganisateur(): ?Site
+    public function getSiteorganisateur(): ?Site
     {
         return $this->site_organisateur;
     }
