@@ -16,6 +16,7 @@
         {% endblock %}
     </head>
     <body class="texty">
+    {% set route_name = app.request.attributes.get('_route') %}
         <nav class="navbar navbar-expand-lg ">
             <div class="container">
 
