@@ -20,20 +20,26 @@
 
                 <div class="pure-menu pure-menu-horizontal" id="menu">
                     <ul class="pure-menu-list">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li class="pure-menu-item {% if route_name == "app_register" %}active{% endif %}">
+                            <a href="{{ path('app_register' )}}" class="pure-menu-link">Ajouter un participant</a>
+                            {% if route_name == "app_register" %}<span class="sr-only">(current)</span>{% endif %}
+                        </li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">Ville</a>
+                            <a href="#" class="pure-menu-link">Villes</a>
                         </li>
                         <li class="pure-menu-item">
                             <a href="#" class="pure-menu-link">Sites</a>
                         </li>
+                        {% endif %}
                         <li class="pure-menu-item">
                             <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
                         </li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">Mon profil</a>
+                            <a href="{{ path ('user_controller_index') }}" class="pure-menu-link">Mon profil</a>
                         </li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">Déconnecter</a>
+                            <a href="{{ path ('app_logout') }}" class="pure-menu-link">Déconnexion</a>
                         </li>
                     </ul>
                 </div>
