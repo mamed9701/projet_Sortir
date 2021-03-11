@@ -20,7 +20,7 @@ class SortieController extends AbstractController
      */
     public function index(SortieRepository $sortieRepository): Response
     {
-        return $this->render('sortie/index.html.twig', [
+        return $this->render('sortie/home.html.twig', [
             'sorties' => $sortieRepository->findAll(),
         ]);
     }
