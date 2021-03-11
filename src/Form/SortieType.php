@@ -2,9 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Sortie;
+use App\Entity\Site;
+use App\Entity\Lieu;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -37,29 +41,14 @@ class SortieType extends AbstractType
                 'label' => 'Descritpion et infos : '
             ])
 
-            ->add('site_organisateur', EntityType::class, [
+            ->add('site_organisateur', TextType::class, [
                 'label' => 'Ville organisatrice : ',
-                'class' => Site::class,
 
             ])
 //            ->add('organisateur')
+            ->add('lieux_no_lieu', LieuType::class, [
+                'label' => ' '
 
-            ->add('lieux_no_lieu', LieuType::class)
-
-//            ->add('lieux_no_lieu', null, [
-//                'label' => 'Rue',
-//                'choice_label' => function(Lieu $lieu) {
-//                    return sprintf('%s', $lieu->getRue());
-//                }
-//            ])
-
-            ->add('lieux_no_lieu', null, [
-                'label' => 'Lieu',
-                'choice_label' => 'Lieu'
-            ])
-
-            ->add('etats_no_etat', null, [
-                'choice_label' => 'libelle'
             ])
         ;
 
