@@ -14,17 +14,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/")
+ * @Route("/sortie")
  */
 class SortieController extends AbstractController
 {
 
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
+     * @param SortieRepository $sortieRepository
+     * @param SiteRepository $siteRepository
+     * @param VilleRepository $villeRepository
+     * @param LieuRepository $lieuRepository
+     * @return Response
      */
     public function index(SortieRepository $sortieRepository, SiteRepository $siteRepository, VilleRepository $villeRepository, LieuRepository $lieuRepository): Response
     {
-        return $this->render('sortie/home.html.twig', [
+        return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
             'sites' => $siteRepository->findAll(),
             'villes' => $villeRepository->findAll(),
