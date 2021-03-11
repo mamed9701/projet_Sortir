@@ -21,6 +21,11 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
+     * @param SortieRepository $sortieRepository
+     * @param SiteRepository $siteRepository
+     * @param VilleRepository $villeRepository
+     * @param LieuRepository $lieuRepository
+     * @return Response
      */
     public function index(SortieRepository $sortieRepository, SiteRepository $siteRepository, VilleRepository $villeRepository, LieuRepository $lieuRepository): Response
     {
