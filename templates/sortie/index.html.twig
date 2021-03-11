@@ -17,12 +17,15 @@
                         <div class="row">
                             <div class="pure-u-3">
 
-                                Site
-                                <select>            <!-- Liste déroulante des sites -->
-                                    {% for site in sites %}
-                                        <option>{{ site.nom }}</option>
-                                    {% endfor %}
-                                </select>
+
+                                <label for="site">
+                                    Site
+                                    <select id="site">            <!-- Liste déroulante des sites -->
+                                        {% for site in sites %}
+                                            <option>{{ site.nom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
 
                                 <br>
                                 Le nom de la sortie contient : <input type="text" name="search" class="pure-input-rounded" placeholder="search"><!-- Input -->
@@ -80,7 +83,7 @@
                         <td>
                             <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
                             <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
-                            <a href="">Annuler</a>
+                            <a href="{{ path('sortie_index') }}">Annuler</a>
                         </td>
                     </tr>
                 {% else %}
@@ -93,6 +96,6 @@
     </div>
     <br><br>
     <div class="container">
-        <a class="pure-button pure-button-primary" href="{{ path('sortie_new') }}">Create new</a>
+        <a href="{{ path('sortie_new') }}"><button class="pure-button pure-button-primary">Créer une sortie</button></a>&nbsp;
     </div>
 {% endblock %}
