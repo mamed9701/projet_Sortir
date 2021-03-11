@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\UserController;
 use App\Form\UserControllerType;
 use App\Repository\UserControllerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,7 @@ class UserControllerController extends AbstractController
      */
     public function index(UserControllerRepository $userControllerRepository): Response
     {
-        return $this->render('user_controller/home.html.twig', [
+        return $this->render('user_controller/index.html.twig', [
             'user_controllers' => $userControllerRepository->findAll(),
         ]);
     }

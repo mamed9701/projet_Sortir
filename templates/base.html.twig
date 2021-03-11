@@ -9,14 +9,14 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
         <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css">
         <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
     <body class="texty">
-        <nav class="navbar navbar-expand-lg ">
+    {% set route_name = app.request.attributes.get('_route') %}
+    <nav class="navbar navbar-expand-lg ">
             <div class="container">
 
                 <div class="pure-menu pure-menu-horizontal" id="menu">
@@ -43,7 +43,7 @@
                             <a href="{{ path ('user_controller_index') }}" class="pure-menu-link">Mon profil</a>
                         </li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">Se déconnecter</a>
+                            <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
 
                         </li>
                     </ul>
