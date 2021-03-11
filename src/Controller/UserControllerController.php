@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\UserController;
 use App\Form\UserControllerType;
 use App\Repository\UserControllerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +16,8 @@ class UserControllerController extends AbstractController
 {
     /**
      * @Route("/", name="user_controller_index", methods={"GET"})
+     * @param UserControllerRepository $userControllerRepository
+     * @return Response
      */
     public function index(UserControllerRepository $userControllerRepository): Response
     {
