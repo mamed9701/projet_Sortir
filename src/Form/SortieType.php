@@ -43,16 +43,15 @@ class SortieType extends AbstractType
 
             ->add('site_organisateur', TextType::class, [
                 'label' => 'Ville organisatrice : ',
-
+//                'choice_label' => 'nom'
+                'disabled' => true,
             ])
+
 //            ->add('organisateur')
             ->add('lieux_no_lieu', LieuType::class, [
                 'label' => ' '
-
             ])
         ;
-
-
     }
 
 

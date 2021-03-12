@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Lieu;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,13 +18,22 @@ class LieuType extends AbstractType
             ->add('villes_no_ville', VilleType::class, [
                 'label' => ' '
             ])
-            ->add('nom', null, [
+            ->add('nom', EntityType::class, [
                 'label' => 'Lieu',
+                'choice_label' => 'nom',
+                'class' => Lieu::class
             ])
-            ->add('rue')
+            ->add('send', ButtonType::class, [
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ],
+                'label' => ' + '
+            ])
+            ->add('rue', null, [
+                'disabled' => true
+            ])
             ->add('latitude')
             ->add('longitude')
-
         ;
     }
 
