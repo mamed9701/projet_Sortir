@@ -63,10 +63,12 @@ class SortieController extends AbstractController
     /**
      * @Route("/{id}", name="sortie_show", methods={"GET"})
      */
-    public function show(Sortie $sortie): Response
+    public function show(Sortie $sortie, SortieRepository $sortieRepo): Response
     {
+      // $users=$sortie->getId();
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
+            //'users' => $sortieRepo->findPseudosSortie($users),
         ]);
     }
 
