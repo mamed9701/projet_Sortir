@@ -7,7 +7,7 @@
     <div id="date" >
         Date du jour : {{ "now"|date("d/m/Y") }}
         <br>
-        Participant : <!-- if(participant){ session.nom }-->
+        Participant : {{ app.user.prenom }} {{ app.user.nom }}
     </div>
 
     <div class="container">

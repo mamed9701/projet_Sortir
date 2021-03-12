@@ -36,6 +36,15 @@ class UserControllerRepository extends ServiceEntityRepository implements Passwo
         $this->_em->flush();
     }
 
+    public function findOneById($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return UserController[] Returns an array of UserController objects
     //  */

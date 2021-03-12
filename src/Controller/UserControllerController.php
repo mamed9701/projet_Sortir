@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+//use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/user/controller")
@@ -50,14 +51,30 @@ class UserControllerController extends AbstractController
         ]);
     }
 
+//    /**
+//     * @Route("/profil", name="user_controller_show", methods={"GET"})
+//     */
+//    public function show(UserInterface $user): Response
+//    {
+//        /*
+//         * $user_controller = $repo->findByPseudo($user->username)
+//         *
+//         */
+//        return $this->render('user_controller/show.html.twig', [
+//            'logged_user' => $user,
+//        ]);
+//    }
+
     /**
      * @Route("/{id}", name="user_controller_show", methods={"GET"})
      */
-    public function show(UserController $userController): Response
+    public function show(UserController $userController, UserControllerRepository $repo, UserController $id): Response
     {
-        return $this->render('user_controller/show.html.twig', [
-            'user_controller' => $userController,
-        ]);
+        $infos = $repo->findOneById($id);
+//        return $this->render('user_controller/show.html.twig', [
+//            'user_controller' => $userController,
+//        ]);
+        return $this->render('user_controller/show.html.twig', compact('infos'));
     }
 
     /**
