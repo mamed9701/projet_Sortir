@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
-        <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body class="texty">
-    {% set route_name = app.request.attributes.get('_route') %}
-    <nav class="navbar navbar-expand-lg ">
-            <div class="container">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"
+          integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+    <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
+    {% block javascripts %}
+        {# {{ encore_entry_script_tags('app') }} #}
+    {% endblock %}
+</head>
+<body class="texty">
+{% set route_name = app.request.attributes.get('_route') %}
+<nav class="navbar navbar-expand-lg ">
+    <div class="container">
 
-                <div class="pure-menu pure-menu-horizontal" id="menu">
-                    <ul class="pure-menu-list">
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li class="pure-menu-item {% if route_name == "app_register" %}active{% endif %}">
-                            <a href="{{ path('app_register' )}}" class="pure-menu-link">Ajouter un participant</a>
-                            {% if route_name == "app_register" %}<span class="sr-only">(current)</span>{% endif %}
-                        </li>
-                        <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">Villes</a>
-                        </li>
-                        <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">Sites</a>
-                        </li>
-                        {% endif %}
-                        <li class="pure-menu-item">
-                            <a href="{{ path('app_login') }}" class="pure-menu-link">Se connecter</a>
-                        </li>
-                        <li class="pure-menu-item">
-                            <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
-                        </li>
-                        <li class="pure-menu-item">
-                            <a href="{{ path ('user_controller_index') }}" class="pure-menu-link">Mon profil</a>
-                        </li>
-                        <li class="pure-menu-item">
-                            <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
+        <div class="pure-menu pure-menu-horizontal" id="menu">
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item {% if route_name == "sortie_index" %}active{% endif %}">
+                    <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
+                    {% if route_name == "sortie_index" %}<span class="sr-only">(current)</span>{% endif %}
+                </li>
 
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <hr>
+                <li class="pure-menu-item {% if route_name == "user_controller_show" %}active{% endif %}">
+                    <a href="{{ path ('user_controller_show', {'id' : app.user.id}) }}" class="pure-menu-link">Mon profil</a>
+                    {% if route_name == "user_controller_show" %}<span class="sr-only">(current)</span>{% endif %}
+                </li>
 
-                {% block body %}{% endblock %}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# quand le remember_me est coché #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="pure-menu-item {% if route_name == "app_register" %}active{% endif %}">
+                        <a href="{{ path('app_register' ) }}" class="pure-menu-link">Ajouter un participant</a>
+                        {% if route_name == "app_register" %}<span class="sr-only">(current)</span>{% endif %}
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="#" class="pure-menu-link">Villes</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="#" class="pure-menu-link">Sites</a>
+                    </li>
+                {% endif %}
+                <li class="pure-menu-item {% if route_name == "app_logout" %}active{% endif %}">
+                    <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
+                    {% if route_name == "app_logout" %}<span class="sr-only">(current)</span>{% endif %}
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<hr>
 
-    </body>
+{% block body %}{% endblock %}
+
+</body>
 </html>
