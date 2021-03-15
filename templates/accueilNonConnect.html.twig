@@ -13,33 +13,80 @@
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"
           integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
     <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+          crossorigin="anonymous"/>
+
+    <link rel="stylesheet" href="/css/pure/pure-min.css">
+    <link rel="stylesheet" href="/css/pure/grids-responsive-min.css">
+    <link rel="stylesheet" href="/layouts/gallery/styles.css">
+
     {% block javascripts %}
         {# {{ encore_entry_script_tags('app') }} #}
     {% endblock %}
+
+    <style>
+        body {
+            background-image:url(https://c2.staticflickr.com/6/5515/9199788659_818383d0b8_k.jpg);
+        }
+        .header{
+            background-color: white;
+         }
+    </style>
 </head>
+
 <body class="texty">
 {% set route_name = app.request.attributes.get('_route') %}
-<nav class="navbar navbar-expand-lg ">
-    <div class="container">
 
-        <div class="pure-menu pure-menu-horizontal" id="menu">
-            <ul class="pure-menu-list">
+<div class="header">
+    <div class="pure-menu pure-menu-horizontal">
+        <span style="font-size: 30px; "><i class="fab fa-angellist"></i>&nbsp;Sortir.com</span>
 
-                <li class="pure-menu-item {% if route_name == "app_login" %}active{% endif %}">
-                    <a href="{{ path('app_login') }}" class="pure-menu-link">Se connecter</a>
-                    {% if route_name == "app_login" %}<span class="sr-only">(current)</span>{% endif %}
-                </li>
-                <li class="pure-menu-item {% if route_name == "sortie_index" %}active{% endif %}">
-                    <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
-                    {% if route_name == "sortie_index" %}<span class="sr-only">(current)</span>{% endif %}
-                </li>
-            </ul>
-        </div>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected {% if route_name == "app_login" %}active{% endif %}">
+                <a href="{{ path('app_login') }}" class="pure-menu-link">Se connecter</a>
+                {% if route_name == "app_login" %}<span class="sr-only">(current)</span>{% endif %}
+            </li>
+        </ul>
     </div>
-</nav>
-<hr>
+</div>
 
-{% block body %}{% endblock %}
+{% block body %}
+    <div class="container">
+        <table class="pure-table pure-table-horizontal">
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Cloture</th>
+                <th>Inscriptions/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d-m-Y') : '' }}</td>
+                    <td>0/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etatsNoEtat.libelle }}</td>
+                    <td style="text-align: center">X</td>
+                    <td>{{ sortie.organisateur.nom }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+
+{% endblock %}
 
 </body>
 </html>
