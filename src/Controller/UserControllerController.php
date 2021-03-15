@@ -51,30 +51,27 @@ class UserControllerController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/profil", name="user_controller_show", methods={"GET"})
-//     */
-//    public function show(UserInterface $user): Response
-//    {
-//        /*
-//         * $user_controller = $repo->findByPseudo($user->username)
-//         *
-//         */
-//        return $this->render('user_controller/show.html.twig', [
-//            'logged_user' => $user,
-//        ]);
-//    }
 
     /**
-     * @Route("/{id}", name="user_controller_show", methods={"GET"})
+     * @Route("/{id}", name="user_controller_show", methods={"GET","POST"})
      */
-    public function show(UserController $userController, UserControllerRepository $repo, UserController $id): Response
+    public function show(UserController $userController, UserControllerRepository $repo, UserController $id, Request $request): Response
     {
-        $infos = $repo->findOneById($id);
-//        return $this->render('user_controller/show.html.twig', [
+        $form = $this->createForm(UserControllerType::class, $userController);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('sortie_index');
+        }
+
+        return $this->render('user_controller/show.html.twig', [
 //            'user_controller' => $userController,
-//        ]);
-        return $this->render('user_controller/show.html.twig', compact('infos'));
+            'form' => $form->createView(),
+        ]);
+
+
     }
 
     /**

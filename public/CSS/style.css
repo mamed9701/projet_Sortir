@@ -7,3 +7,18 @@
 #date{
     float:right;
 }
+
+tr{
+    text-align: center;
+}
+
+.pure-table{
+    background-color: white;
+    display: block;
+    vertical-align: center;
+    horiz-align: center;
+}
+
+.pure-menu-list{
+    float: right;
+}

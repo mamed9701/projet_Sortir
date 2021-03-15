@@ -3,11 +3,17 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block body %}
-    <div class="container">
+{#    <div class="container">#}
     <h1>Mon profil</h1>
 
-    <table class="table">
-        <tbody>
+    {{ include('user_controller/_form.html.twig') }}
+{#    <table class="table">#}
+{#        <tbody>#}
+
+{#        {{ form_start(form) }}#}
+{#        {{ form_widget(form) }}#}
+{#        <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#        {{ form_end(form) }}#}
 
 {#            <tr>#}
 {#                <th>Id</th>#}
@@ -41,13 +47,15 @@
 {#                <th>Url_photo</th>#}
 {#                <td>{{ app.user.urlPhoto }}</td>#}
 {#            </tr>#}
-        </tbody>
-    </table>
+
+
+{#        </tbody>#}
+{#    </table>#}
 
 {#    <a href="{{ path('user_controller_index') }}">back to list</a>#}
 
 {#    <a href="{{ path('user_controller_edit', {'id': user_controller.id}) }}">edit</a>#}
 
 {#    {{ include('user_controller/_delete_form.html.twig') }}#}
-    </div>
+{#    </div>#}
 {% endblock %}
