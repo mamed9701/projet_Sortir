@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use App\Entity\UserController;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,23 +24,43 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    /*
-    public function findPseudosSortie($id){
+
+    public function findPseudosSortie(int $id){
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT pseudo FROM user_controller INNER JOIN user_controller_sortie ON user_controller.id=user_controller_sortie.user_controller_id
+        $sql = "SELECT pseudo,user_controller.nom,prenom FROM user_controller 
+            INNER JOIN user_controller_sortie ON user_controller.id=user_controller_sortie.user_controller_id
             INNER JOIN sortie ON user_controller_sortie.sortie_id=sortie.id
-            WHERE sortie.id = :id";
+            WHERE sortie.id =:id";
         $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        var_dump($stmt->fetchAll());die;
-*/
-        /* $listeUsers = $stmt->fetchAll();
-         * return $listeUsers;
-         */
-   /* } */
+        $stmt->execute(['id' => $id]);
+        $listeUsers = $stmt->fetchAll();
+        return $listeUsers;
+    }
+
+    public function findTypeUser(int $id){
+        $qb=$this->createQueryBuilder('s');
+        $qb->addSelect('c.pseudo');
+        $qb->from(UserController::class,'u');
+        $qb->leftJoin(UserController::class,'c',Join::WITH, 's.id=c.id');
+        $qb->where('s.id = :id');
+        $qb->setParameter('id',$id);
+        $qb->getQuery()->getResult();
+       // var_dump($qb);
+        return $qb;
+
+       /* return $this->createQueryBuilder('s')
+            ->addSelect('u.pseudo')
+            ->from(UserController::class,'u')
+            ->innerJoin(UserController::class,'c',Join::WITH, 's.id=c.id')
+            ->where('s.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()->getResult();*/
+    }
 
 
-    /*
+//->innerJoin('AppBundle:GroupUser', 'gu', Join::ON, 'g.id = gu.group_id')
+//->andWhere('g.itinerary = :itineraryId')
+//->setParameter('itineraryId', $itinerary->getId())
 
 
     /*

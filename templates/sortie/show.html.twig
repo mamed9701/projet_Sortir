@@ -16,11 +16,11 @@
                     </tr>
                     <tr>
                         <th>Date et heure de la sortie :</th>
-                        <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
                     </tr>
                     <tr>
                         <th>Date limite d'inscription :</th>
-                        <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d') : '' }}</td>
+                        <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                     </tr>
                     <tr>
                         <th>Nombre de places :</th>
@@ -71,16 +71,16 @@
 
             <div class="container">
                 <table class="table">
-{#                    <tr>{% for user in users %}#}
+                    <tr>
                         <th>Pseudo</th>
                         <th>Nom et prénom</th>
                     </tr>
-                    <tbody>
+                    {% for user in users %}
                     <tr>
-{#                        <td>{{ user.pseudo }}</td>#}
-                        <td></td>
-{#                    {% endfor %}</tr>#}
-                    </tbody>
+                            <td>{{ user.pseudo }}</td>
+                            <td>{{ user.nom }} {{ user.prenom }}</td>
+
+                    </tr> {% endfor %}
                 </table>
             </div>
 
