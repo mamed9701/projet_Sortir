@@ -70,6 +70,11 @@ class UserControllerController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_controller_show", methods={"GET","POST"})
+     * @param UserController $userController
+     * @param UserControllerRepository $repo
+     * @param UserController $id
+     * @param Request $request
+     * @return Response
      */
     public function show(UserController $userController, UserControllerRepository $repo, UserController $id, Request $request): Response
     {
