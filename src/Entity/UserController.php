@@ -6,6 +6,7 @@ use App\Repository\UserControllerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Scalar\String_;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -241,6 +242,11 @@ class UserController implements UserInterface
     {
         return $this->site;
     }
+
+//    public function getNomSite(): String{
+//        return  $this->site->getNom();
+//
+//    }
 
     public function setSite(?Site $site): self
     {
