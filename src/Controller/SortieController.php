@@ -90,10 +90,11 @@ class SortieController extends AbstractController
      */
     public function show(Sortie $sortie, SortieRepository $sortieRepo): Response
     {
-      // $users=$sortie->getId();
+       $users=$sortie->getId();
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
-            //'users' => $sortieRepo->findPseudosSortie($users),
+            'users' => $sortieRepo->findPseudosSortie($users),
+            //'users' => $sortieRepo->findTypeUser($users),
         ]);
     }
 

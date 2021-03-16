@@ -42,34 +42,50 @@
         Entre <input type="date" name="date_debut"> et <input type="date" name="date_cloture">
     </div>
 
+    <div class="container">
+        <h3>Filtrer les sorties</h3>
+        <!-- à gauche -->
+        <form class="pure-form" action="index.html.twig" method="GET">
+            <div class="row">
+                <div class="pure-u-3">
+                    Site
+                    <select>            <!-- Liste déroulante des sites -->
+                        {% for site in sites %}
+                            <option name="SiteNom">{{ site.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>Le nom de la sortie contient : <input type="text" name="SortieNom" class="pure-input-rounded" placeholder="search">
+                    <br><br>Entre <input type="date" name="SortieDateDebut"> et <input type="date" name="SortieDateCloture">
+                </div>
+                <!-- /à gauche-->
 
-    <!-- 2ème colonne -->
-    <div class="pure-u-6-24">
-        <label for="checkbox-radio-option-one" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-one" value="1"/> Sorties dont je suis
-            l'organisateur/trice</label>
-        <label for="checkbox-radio-option-two" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-two" value="2"/> Sorties auxquelles je suis
-            inscrit/e</label>
+              <!-- 2ème colonne -->
+              <div class="pure-u-6-24">
+                  <label for="checkbox-radio-option-one" class="pure-checkbox">
+                      <input type="checkbox" id="checkbox-radio-option-one" value="1"/> Sorties dont je suis
+                      l'organisateur/trice</label>
+                  <label for="checkbox-radio-option-two" class="pure-checkbox">
+                      <input type="checkbox" id="checkbox-radio-option-two" value="2"/> Sorties auxquelles je suis
+                      inscrit/e</label>
 
-        <label for="checkbox-radio-option-three" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-three" value="3"/> Sorties auxquelles je ne
-            suis pas inscrit/e</label>
-        <label for="checkbox-radio-option-four" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-four" value="4"/> Sorties passées</label>
-    </div>
+                  <label for="checkbox-radio-option-three" class="pure-checkbox">
+                      <input type="checkbox" id="checkbox-radio-option-three" value="3"/> Sorties auxquelles je ne
+                      suis pas inscrit/e</label>
+                  <label for="checkbox-radio-option-four" class="pure-checkbox">
+                      <input type="checkbox" id="checkbox-radio-option-four" value="4"/> Sorties passées</label>
+              </div>
 
     <!-- 3ème colonne -->
-    <div class="pure-u-5-24">
-        <br><br>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button
-                class="pure-button pure-button-primary button-xlarge pure-input-rounded">Rechercher
-        </button>
-    </div>
-    </div>
-</form>
-</div>
-<br>
+            <div class="pure-u-5-24">
+                <br><br>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button
+                        class="pure-button pure-button-primary button-xlarge pure-input-rounded">Rechercher
+                </button>
+            </div>
+            </div>
+        </form>
+        </div>
+        <br>
 
 <div class="pure-u-2-24"></div>
 <div class="pure-u-18-24">
@@ -109,17 +125,35 @@
                     <a href="">Annuler</a>
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        {# </div> #}
-    </table>
-    <div class="pure-u-3-24"></div>
 
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
+                    <td>0/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etatsNoEtat.libelle }}</td>
+                    <td style="text-align: center">X</td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
+                    <td>
+                        <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
+                        <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
+                        <a href="">Annuler</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="pure-u-3-24"></div>
     <br><br>
+    
     <div class="pure-u-3-24"></div>
     <div class="pure-u-5-24">
         <a href="{{ path('sortie_new') }}">
