@@ -17,17 +17,9 @@ class VilleType extends AbstractType
             ->add('nom', EntityType::class, [
                 'label' => 'Ville',
                 'class' => Ville::class,
-//                'query_builder' => function (EntityRepository $er) {
-//                    return $er->createQueryBuilder('l')
-//                        ->select('l.nom')
-//                        ->where('l.lieux_no_lieu.organisateur.id =:app.user.id')
-//                        ->orderBy('l.nom', 'ASC');
-//                },
                 'choice_label' => 'nom',
             ])
-            ->add('code_postal', null, [
-                'disabled' => true
-            ])
+            ->add('code_postal')
         ;
     }
 
