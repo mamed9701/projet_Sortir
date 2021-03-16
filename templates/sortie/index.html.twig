@@ -13,28 +13,28 @@
 </div>
 
 <!-- 1ère colonne : espacement du bord droit -->
-<div class="pure-u-2-24"></div>
+<div class="pure-u-4-24"></div>
 <!--  2ème colonne : titre -->
 <div class="pure-u-5-24">
     <h1>Filtrer les sorties</h1>
 </div>
 <!-- 3ème colonne : blanc jusqu'au bord gauche -->
-<div class="pure-u-17-24" id="date">
+<div class="pure-u-15-24" id="date">
 </div>
-
+<br><br>
 
 <form class="pure-form" action="#" method="POST">
     <!--1ère colonne : espacement du bord droit -->
-    <div class="pure-u-2-24"></div>
+    <div class="pure-u-4-24"></div>
     <!-- 2ème colonne : champs infos -->
-    <div class="pure-u-8-24">
+    <div class="pure-u-7-24">
         Site
         <select>            <!-- Liste déroulante des sites -->
             {% for site in sites %}
                 <option>{{ site.nom }}</option>
             {% endfor %}
         </select>
-
+        <br>
         <br>
         Le nom de la sortie contient : <input type="text" name="search" class="pure-input-rounded"
                                               placeholder="search"><!-- Input -->
@@ -44,7 +44,7 @@
 
 
     <!-- 2ème colonne -->
-    <div class="pure-u-6-24">
+    <div class="pure-u-5-24">
         <label for="checkbox-radio-option-one" class="pure-checkbox">
             <input type="checkbox" id="checkbox-radio-option-one" value="1"/> Sorties dont je suis
             l'organisateur/trice</label>
@@ -71,8 +71,8 @@
 </div>
 <br>
 
-<div class="pure-u-2-24"></div>
-<div class="pure-u-18-24">
+<div class="pure-u-4-24"></div>
+<div class="pure-u-15-24">
     <table class="pure-table pure-table-horizontal">
         <thead>
         <tr>
