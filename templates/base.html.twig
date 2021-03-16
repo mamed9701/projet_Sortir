@@ -13,28 +13,33 @@
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"
           integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
     <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+          crossorigin="anonymous"/>
     {% block javascripts %}
         {# {{ encore_entry_script_tags('app') }} #}
     {% endblock %}
 </head>
+
 <body class="texty">
 {% set route_name = app.request.attributes.get('_route') %}
 <nav class="navbar navbar-expand-lg ">
-    <div class="container">
 
-        <div class="pure-menu pure-menu-horizontal" id="menu">
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item {% if route_name == "sortie_index" %}active{% endif %}">
-                    <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
-                    {% if route_name == "sortie_index" %}<span class="sr-only">(current)</span>{% endif %}
-                </li>
+    <div class="pure-menu pure-menu-horizontal" id="menu">
+        <span style="font-size: 30px; "><i class="fab fa-angellist"></i>&nbsp;Sortir.com</span>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item {% if route_name == "sortie_index" %}active{% endif %}">
+                <a href="{{ path('sortie_index') }}" class="pure-menu-link">Accueil</a>
+                {% if route_name == "sortie_index" %}<span class="sr-only">(current)</span>{% endif %}
+            </li>
 
-                <li class="pure-menu-item {% if route_name == "user_controller_show" %}active{% endif %}">
-                    <a href="{{ path ('user_controller_show', {'id' : app.user.id}) }}" class="pure-menu-link">Mon profil</a>
-                    {% if route_name == "user_controller_show" %}<span class="sr-only">(current)</span>{% endif %}
-                </li>
-                {# quand le remember_me est coché #}
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li class="pure-menu-item {% if route_name == "user_controller_show" %}active{% endif %}">
+                <a href="{{ path ('user_controller_show', {'id' : app.user.id}) }}" class="pure-menu-link">Mon
+                    profil</a>
+                {% if route_name == "user_controller_show" %}<span class="sr-only">(current)</span>{% endif %}
+            </li>
+            {# quand le remember_me est coché #}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="pure-menu-item {% if route_name == "app_register" %}active{% endif %}">
                         <a href="{{ path('app_register' ) }}" class="pure-menu-link">Ajouter un participant</a>
@@ -51,9 +56,8 @@
                     <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
                     {% if route_name == "app_logout" %}<span class="sr-only">(current)</span>{% endif %}
                 </li>
-                {% endif %}
-            </ul>
-        </div>
+            {% endif %}
+        </ul>
     </div>
 </nav>
 <hr>
