@@ -24,7 +24,7 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-
+    // Liste des utilisateurs inscrits avec PHP
     public function findPseudosSortie(int $id){
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT pseudo,user_controller.nom,prenom FROM user_controller 
@@ -37,6 +37,7 @@ class SortieRepository extends ServiceEntityRepository
         return $listeUsers;
     }
 
+    // Liste des utilisateurs inscrits avec DQL Symfony
     public function findTypeUser(int $id){
         $qb=$this->createQueryBuilder('s');
         $qb->addSelect('c.pseudo');
@@ -75,7 +76,8 @@ class SortieRepository extends ServiceEntityRepository
     }
     */
 
-    /* FILTRE
+
+    /* FILTRE de l'accueil
         public function findByParameters($id, $nom, $campus, $from, $to, $isOrganisateur, $isInscrit, $isNotInscrit, $isFinie)
     {
         $query = $this->createQueryBuilder("s")
@@ -90,5 +92,20 @@ class SortieRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+
+    SELECT *
+    FROM sortie
+    INNER JOIN
+        user_controller ON sortie.organisateur_id=user_controller.id
+        etat ON sortie.etats_no_etat_id=etat.id
+    WHERE
+     //si l'etat
+        etat = "passée"
+     //si on est l'organisateur
+        sortie.organisateur_id = user_controller:id
+
+
+
      */
 }
