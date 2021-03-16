@@ -7,6 +7,7 @@ use App\Entity\Site;
 use App\Entity\Lieu;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,7 @@ class SortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('url_photo')
+//            ->add('url_photo')
             ->add('nom', null, [
                 'label' => 'Nom de la sortie : '
             ])
@@ -41,15 +42,21 @@ class SortieType extends AbstractType
                 'label' => 'Descritpion et infos : '
             ])
 
-            ->add('site_organisateur', TextType::class, [
-                'label' => 'Ville organisatrice : ',
-//                'choice_label' => 'nom'
+            ->add('site_organisateur', SiteType::class, [
                 'disabled' => true,
+                'label' => ' '
             ])
 
 //            ->add('organisateur')
             ->add('lieux_no_lieu', LieuType::class, [
                 'label' => ' '
+            ])
+
+            ->add('send', ButtonType::class, [
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ],
+                'label' => ' + '
             ])
         ;
     }

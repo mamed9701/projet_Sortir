@@ -3,49 +3,40 @@
 {% block title %}UserController index{% endblock %}
 
 {% block body %}
-    <h1>UserController index</h1>
 
-    <table class="table">
-        <thead>
+    <div class="pure-u-1-4"></div>
+    <div class="pure-u-2-5">
+        {% for sortie in sorties %}
+{#        <h1>{{ sortie.organisateur.pseudo }}</h1>#}
+        <br><br><br>
+        <table class="table">
+            <tbody>
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Nom</th>
                 <th>Prenom</th>
-                <th>Pseudo</th>
+                <td>??</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>??</td>
+            </tr>
+            <tr>
                 <th>Telephone</th>
-                <th>Actif</th>
-                <th>Url_photo</th>
-                <th>actions</th>
+                <td>??</td>
             </tr>
-        </thead>
-        <tbody>
-        {% for user_controller in user_controllers %}
             <tr>
-                <td>{{ user_controller.id }}</td>
-                <td>{{ user_controller.email }}</td>
-                <td>{{ user_controller.roles ? user_controller.roles|json_encode : '' }}</td>
-                <td>{{ user_controller.password }}</td>
-                <td>{{ user_controller.nom }}</td>
-                <td>{{ user_controller.prenom }}</td>
-                <td>{{ user_controller.pseudo }}</td>
-                <td>{{ user_controller.telephone }}</td>
-                <td>{{ user_controller.actif ? 'Yes' : 'No' }}</td>
-                <td>{{ user_controller.urlPhoto }}</td>
-                <td>
-                    <a href="{{ path('user_controller_show', {'id': user_controller.id}) }}">show</a>
-                    <a href="{{ path('user_controller_edit', {'id': user_controller.id}) }}">edit</a>
-                </td>
+                <th>Email</th>
+                <td>??</td>
             </tr>
-        {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <th>Ville de rattachement</th>
+                <td>??</td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('user_controller_new') }}">Create new</a>
+        <a href="{{ path('sortie_index') }}" class="button-secondary pure-button button-xlarge pure-input-rounded m-5">Retour</a>
+
+{% endfor %}
+    </div>
+
 {% endblock %}

@@ -33,8 +33,8 @@
                     <a href="{{ path ('user_controller_show', {'id' : app.user.id}) }}" class="pure-menu-link">Mon profil</a>
                     {% if route_name == "user_controller_show" %}<span class="sr-only">(current)</span>{% endif %}
                 </li>
-
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# quand le remember_me est coché #}
+                {# quand le remember_me est coché #}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="pure-menu-item {% if route_name == "app_register" %}active{% endif %}">
                         <a href="{{ path('app_register' ) }}" class="pure-menu-link">Ajouter un participant</a>

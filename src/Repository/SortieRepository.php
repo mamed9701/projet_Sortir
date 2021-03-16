@@ -22,7 +22,7 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Sortie[] Returns an array of Sortie objects
+     * @return \Doctrine\DBAL\Statement Returns an array of Sortie objects
      */
     // Liste des utilisateurs inscrits avec PHP
     public function findPseudosSortie(int $id){
@@ -63,6 +63,28 @@ class SortieRepository extends ServiceEntityRepository
 //->andWhere('g.itinerary = :itineraryId')
 //->setParameter('itineraryId', $itinerary->getId())
 
+//    public function findPseudosSortie($id){
+//        $conn = $this->getEntityManager()->getConnection();
+//        $sql = "SELECT pseudo FROM user_controller INNER JOIN user_controller_sortie ON user_controller.id=user_controller_sortie.user_controller_id
+//            INNER JOIN sortie ON user_controller_sortie.sortie_id=sortie.id
+//            WHERE sortie.id = :id";
+//        $stmt = $conn->prepare($sql);
+//        $stmt->execute();
+//        var_dump($stmt->fetchAll());
+//        die;
+//        }
+
+
+//    public function findVille()
+//    {
+//        $conn = $this->getEntityManager()->getConnection();
+//        $sql = "SELECT site.nom FROM site INNER JOIN user_controller ON site.id = user_controller.site_id WHERE user_controller.site_id=site.id";
+//        $stmt = $conn->prepare($sql);
+//        $stmt->execute();
+//        var_dump($stmt->fetchAll());
+//        return $stmt;
+//        die;
+//    }
 
     /*
     public function findOneBySomeField($value): ?Sortie

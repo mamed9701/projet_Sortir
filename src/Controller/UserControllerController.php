@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 //use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -16,15 +17,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserControllerController extends AbstractController
 {
+//    /**
+//     * @Route("/", name="user_controller_index", methods={"GET"})
+//     * @param UserControllerRepository $userControllerRepository
+//     * @return Response
+//     */
+//    public function index(UserControllerRepository $userControllerRepository): Response
+//    {
+//        return $this->render('user_controller/index.html.twig', [
+//            'user_controllers' => $userControllerRepository->findAll(),
+//        ]);
+//    }
+
     /**
-     * @Route("/", name="user_controller_index", methods={"GET"})
+     * @Route("/index/{id}", name="user_controller_index", methods={"GET","POST"})
      * @param UserControllerRepository $userControllerRepository
      * @return Response
      */
-    public function index(UserControllerRepository $userControllerRepository): Response
+    public function index(UserControllerRepository $userControllerRepository, UserController $id, UserController $userController): Response
     {
+
+        $infos = $userControllerRepository->findOneById($id);
+//        var_dump($infos);
         return $this->render('user_controller/index.html.twig', [
-            'user_controllers' => $userControllerRepository->findAll(),
+            'sorties' => $infos
         ]);
     }
 
@@ -51,30 +67,32 @@ class UserControllerController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/profil", name="user_controller_show", methods={"GET"})
-//     */
-//    public function show(UserInterface $user): Response
-//    {
-//        /*
-//         * $user_controller = $repo->findByPseudo($user->username)
-//         *
-//         */
-//        return $this->render('user_controller/show.html.twig', [
-//            'logged_user' => $user,
-//        ]);
-//    }
 
     /**
-     * @Route("/{id}", name="user_controller_show", methods={"GET"})
+     * @Route("/{id}", name="user_controller_show", methods={"GET","POST"})
+     * @param UserController $userController
+     * @param UserControllerRepository $repo
+     * @param UserController $id
+     * @param Request $request
+     * @return Response
      */
-    public function show(UserController $userController, UserControllerRepository $repo, UserController $id): Response
+    public function show(UserController $userController, UserControllerRepository $repo, UserController $id, Request $request): Response
     {
-        $infos = $repo->findOneById($id);
-//        return $this->render('user_controller/show.html.twig', [
+        $form = $this->createForm(UserControllerType::class, $userController);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('sortie_index');
+        }
+
+        return $this->render('user_controller/show.html.twig', [
 //            'user_controller' => $userController,
-//        ]);
-        return $this->render('user_controller/show.html.twig', compact('infos'));
+            'form' => $form->createView(),
+        ]);
+
+
     }
 
     /**
@@ -102,7 +120,7 @@ class UserControllerController extends AbstractController
      */
     public function delete(Request $request, UserController $userController): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userController->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $userController->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($userController);
             $entityManager->flush();
