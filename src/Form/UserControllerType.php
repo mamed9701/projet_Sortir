@@ -31,9 +31,6 @@ class UserControllerType extends AbstractType
                 ],
                 'second_options' => ['label' => 'Confirmer le mot de passe'],
             ])
-//            ->add('password', null, [
-//                'data' => ''
-//            ])
             ->add('site', SiteType::class, [
                 'label' => ' '
             ])
