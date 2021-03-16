@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 //use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -16,15 +17,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserControllerController extends AbstractController
 {
+//    /**
+//     * @Route("/", name="user_controller_index", methods={"GET"})
+//     * @param UserControllerRepository $userControllerRepository
+//     * @return Response
+//     */
+//    public function index(UserControllerRepository $userControllerRepository): Response
+//    {
+//        return $this->render('user_controller/index.html.twig', [
+//            'user_controllers' => $userControllerRepository->findAll(),
+//        ]);
+//    }
+
     /**
-     * @Route("/", name="user_controller_index", methods={"GET"})
+     * @Route("/index/{id}", name="user_controller_index", methods={"GET","POST"})
      * @param UserControllerRepository $userControllerRepository
      * @return Response
      */
-    public function index(UserControllerRepository $userControllerRepository): Response
+    public function index(UserControllerRepository $userControllerRepository, UserController $id, UserController $userController): Response
     {
+
+        $infos = $userControllerRepository->findOneById($id);
+//        var_dump($infos);
         return $this->render('user_controller/index.html.twig', [
-            'user_controllers' => $userControllerRepository->findAll(),
+            'sorties' => $infos
         ]);
     }
 
@@ -99,7 +115,7 @@ class UserControllerController extends AbstractController
      */
     public function delete(Request $request, UserController $userController): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userController->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $userController->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($userController);
             $entityManager->flush();
