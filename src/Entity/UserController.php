@@ -82,6 +82,8 @@ class UserController implements UserInterface
      */
     private $user_sortie;
 
+
+
     public function __construct()
     {
         $this->user_sortie = new ArrayCollection();

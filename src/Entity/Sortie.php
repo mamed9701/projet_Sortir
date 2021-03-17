@@ -58,11 +58,6 @@ class Sortie
      */
     private $organisateur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $lieux_no_lieu;
 
     /**
      * @ORM\ManyToOne(targetEntity=Etat::class)
@@ -75,6 +70,12 @@ class Sortie
      * @ORM\JoinColumn(nullable=false)
      */
     private $site_organisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieux_noLieu;
 
     public function getId(): ?int
     {
@@ -179,12 +180,12 @@ class Sortie
 
     public function getLieuxNolieu(): ?Lieu
     {
-        return $this->lieux_no_lieu;
+        return $this->lieux_noLieu;
     }
 
-    public function setLieuxNoLieu(?Lieu $lieux_no_lieu): self
+    public function setLieuxNoLieu(?Lieu $lieux_noLieu): self
     {
-        $this->lieux_no_lieu = $lieux_no_lieu;
+        $this->lieux_noLieu = $lieux_noLieu;
 
         return $this;
     }

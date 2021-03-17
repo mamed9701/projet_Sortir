@@ -19,34 +19,33 @@
     <h1>Filtrer les sorties</h1>
 </div>
 <!-- 3ème colonne : blanc jusqu'au bord gauche -->
-<div class="pure-u-15-24" id="date">
-</div>
+<div class="pure-u-15-24" id="date"></div>
 <br><br>
 
-<form class="pure-form" action="#" method="POST">
+<form class="pure-form" action="{{ path('sortie_index') }}" method="POST">
     <!--1ère colonne : espacement du bord droit -->
     <div class="pure-u-4-24"></div>
     <!-- 2ème colonne : champs infos -->
     <div class="pure-u-7-24">
         Site
         <select>            <!-- Liste déroulante des sites -->
+            <option name=" " selected> </option>
             {% for site in sites %}
-                <option>{{ site.nom }}</option>
+                <option name="SiteNom">{{ site.nom }}</option>
             {% endfor %}
         </select>
         <br>
         <br>
-        Le nom de la sortie contient : <input type="text" name="search" class="pure-input-rounded"
+        Le nom de la sortie contient : <input type="text" name="SortieNom" class="pure-input-rounded"
                                               placeholder="search"><!-- Input -->
         <br><br>
-        Entre <input type="date" name="date_debut"> et <input type="date" name="date_cloture">
+        Entre <input type="date" name="SortieDateDebut"> et <input type="date" name="SortieDateCloture">
     </div>
-
 
     <!-- 2ème colonne -->
     <div class="pure-u-5-24">
         <label for="checkbox-radio-option-one" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-one" value="1"/> Sorties dont je suis
+            <input type="checkbox" id="checkbox-radio-option-one" value="SortieOrganisateur"/> Sorties dont je suis
             l'organisateur/trice</label>
         <label for="checkbox-radio-option-two" class="pure-checkbox">
             <input type="checkbox" id="checkbox-radio-option-two" value="2"/> Sorties auxquelles je suis
@@ -56,7 +55,7 @@
             <input type="checkbox" id="checkbox-radio-option-three" value="3"/> Sorties auxquelles je ne
             suis pas inscrit/e</label>
         <label for="checkbox-radio-option-four" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-four" value="4"/> Sorties passées</label>
+            <input type="checkbox" id="checkbox-radio-option-four" value="SortieEtatPassee"/> Sorties passées</label>
     </div>
 
     <!-- 3ème colonne -->
@@ -94,7 +93,16 @@
                 <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                 <td>0/{{ sortie.nbInscriptionsMax }}</td>
                 <td>{{ sortie.etatsNoEtat.libelle }}</td>
-                <td style="text-align: center">X</td>
+                <td>
+{#                                       {% for sortie in sorties %}#}
+                                            {% if inscrits %}
+                                               X
+                                            {% else %}
+
+                                            {% endif %}
+{#                                       {% endfor %}#}
+                </td>
+
                 <td>
                     {% if app.user.pseudo is same as (sortie.organisateur.pseudo) %}
                         {{ sortie.organisateur.pseudo }}
@@ -104,13 +112,20 @@
                 </td>
                 <td>
                     <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
-                    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
-                    <a href="">Annuler</a>
+                    {%  if (app.user.id == sortie.organisateur.id) %}
+                        <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
+                        <a href="">Annuler</a>
+                    {% endif %}
+                    {%  if (app.user.id != sortie.organisateur.id) %}
+                        {% if (date() <= (sortie.dateCloture)) %}
+                            <a href="{{ path('sinscrire', {'id': sortie.id}) }}">S'inscrire</a>
+                        {% endif %}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Aucune sortie enregistrée</td>
             </tr>
         {% endfor %}
         </tbody>
