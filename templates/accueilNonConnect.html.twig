@@ -67,8 +67,8 @@
             {% for sortie in sorties %}
                 <tr>
                     <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
-                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d-m-Y') : '' }}</td>
+                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                     <td>0/{{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.etatsNoEtat.libelle }}</td>
                     <td style="text-align: center">X</td>

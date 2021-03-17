@@ -21,13 +21,14 @@
     {{ form_row(form.site) }}
 </div>
 
-{{ form_end(form) }}
-
-
 <div class="pure-u-1-5"></div>
 <div class="pure-u-1-4">
     <button class="button-success pure-button button-xlarge pure-input-rounded m-5">{{ button_label|default('Enregistrer') }}</button>
-    <a href="{{ path('sortie_index') }}"
-       class="button-error pure-button button-xlarge pure-input-rounded m-5">Annuler</a>
+    <a href="{{ path('sortie_index') }}" class="btn btn-danger button-xlarge">Annuler</a>
 </div>
+
+{{ form_end(form) }}
+
+
+
 

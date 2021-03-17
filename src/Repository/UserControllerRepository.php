@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method UserController|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method UserController[]    findAll()
  * @method UserController[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserControllerRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserControllerRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -43,6 +44,20 @@ class UserControllerRepository extends ServiceEntityRepository implements Passwo
             ->setParameter('id', $id)
             ->getQuery()
             ->getResult();
+    }
+
+    public function loadUserByUsername(string $pseudoOrEmail)
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Entity\UserController u
+                WHERE u.pseudo = :query
+                OR u.email = :query'
+        )
+            ->setParameter('query', $pseudoOrEmail)
+            ->getOneOrNullResult();
     }
 
     // /**
@@ -73,4 +88,7 @@ class UserControllerRepository extends ServiceEntityRepository implements Passwo
         ;
     }
     */
+
+
+
 }
