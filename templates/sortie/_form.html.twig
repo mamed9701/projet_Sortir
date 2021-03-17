@@ -1,5 +1,32 @@
 {{ form_start(form) }}
+<div class="pure-u-1-5"></div>
+<div class="pure-u-1-4">
+    {{ form_row(form.nom) }}
+    {{ form_row(form.date_debut)}}
+    {{ form_row(form.date_cloture)}}
+    {{ form_row(form.nb_inscriptions_max)}}
+    {{ form_row(form.duree)}}
+    {{ form_row(form.description_infos)}}
+    <br><br><br><br>
+    <button class="btn btn-success button-xlarge">{{ button_label|default('Enregistrer') }}</button>
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <a class = "btn btn-danger button-xlarge" href="{{ path('sortie_index') }}"> Annuler </a>
+</div>
+<div class="pure-u-1-8"></div>
+<div class="pure-u-1-4 pure-form pure-form-stacked">
+    Ville Organisatrice : {{ app.user.site.nom}}
+    <br>
+    <label for="villes">Ville : </label>
+    <select name="villes" id="villes">
+    {% for ville in villes %}
+        <option value="{{ ville.id }}"> {{ ville.nom }}</option>
+    {% endfor %}
+    </select>
+    {{ form_row(form.lieux_noLieu)}}
+</div>
     {{ form_widget(form) }}
-    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+
 {{ form_end(form) }}
-<a class = "btn btn-danger"href="{{ path('sortie_index') }}"> Annuler </a>
+
