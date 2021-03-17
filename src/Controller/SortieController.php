@@ -81,8 +81,9 @@ class SortieController extends AbstractController
     {
         //Repo User
         $repoUser = $em->getRepository(UserController::class);
-
-        // Récupère instance de l'utilsateur connecté
+        $villes = $em->getRepository(Ville::class)->findAll();
+        // Récupère instance de l'utilsiateur connecté
+ 
         $user = $repoUser->find($this->getUser());
 
         //dump($user->getSite()->getNom());
@@ -108,6 +109,7 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/new.html.twig', [
             'sortie' => $sortie,
+            'villes' => $villes,
             'form' => $form->createView(),
         ]);
     }
