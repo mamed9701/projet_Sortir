@@ -18,6 +18,9 @@ class VilleType extends AbstractType
                 'label' => 'Ville',
                 'class' => Ville::class,
                 'choice_label' => 'nom',
+                'choice_value' => function (?Ville $entity) {
+                    return $entity ?  $entity->getNom() : '';
+                },
             ])
             ->add('code_postal')
         ;

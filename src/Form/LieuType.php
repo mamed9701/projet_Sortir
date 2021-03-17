@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
@@ -22,18 +23,36 @@ class LieuType extends AbstractType
             ->add('villes_no_ville', VilleType::class, [
                 'label' => ' '
             ])
-            ->add('nom', ChoiceType::class, [
+            ->add('nom', EntityType::class, [
                 'label' => 'Lieu',
-                'choice_label' => ChoiceList::label($this,'nom')
-                //'class' => Lieu::class
-
+                'choice_label' => 'nom',
+                'choice_value' => function (?Lieu $entity) {
+                    return $entity ?  $entity->getNom() : '';
+                },
+                'class' => Lieu::class
             ])
-
+            ->add('send', ButtonType::class, [
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ],
+                'label' => ' + '
+            ])
             ->add('rue', null, [
             ])
             ->add('latitude')
-            ->add('longitude')
-        ;
+            ->add('longitude');
+
+//        $builder->get('nom')
+//            ->addModelTransformer(new CallbackTransformer(
+//                function ($objectToString) {
+//                    // transform the object to a string
+//                    return $objectToString;
+//                },
+//                function (Lieu $StringToObject) {
+//                    return $StringToObject->getNom();
+//                }
+//            ))
+//        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

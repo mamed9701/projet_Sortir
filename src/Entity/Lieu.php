@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LieuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,16 @@ class Lieu
      * @ORM\JoinColumn(nullable=false)
      */
     private $villes_no_ville;
+
+    /**
+     * @ORM\OneToMany(targetEntity=sortie::class, mappedBy="lieux_noLieu")
+     */
+    private $sorties;
+
+    public function __construct()
+    {
+        $this->sorties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,4 +119,38 @@ class Lieu
 
         return $this;
     }
+
+    /**
+     * @return Collection|sortie[]
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSorty(sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setLieuxNoLieu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSorty(sortie $sorty): self
+    {
+        if ($this->sorties->removeElement($sorty)) {
+            // set the owning side to null (unless already changed)
+            if ($sorty->getLieuxNoLieu() === $this) {
+                $sorty->setLieuxNoLieu(null);
+            }
+        }
+
+        return $this;
+    }
+//    public function __toString(){
+//        return $this->nom;
+//    }
+
 }
