@@ -4,6 +4,10 @@
     font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
 }
 
+.center{
+    text-align: center;
+}
+
 #date{
     float:right;
 }

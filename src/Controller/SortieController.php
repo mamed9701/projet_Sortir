@@ -26,20 +26,47 @@ class SortieController extends AbstractController
 {
 
     /**
-     * @Route("/", name="sortie_index", methods={"GET"})
+     * @Route("/", name="sortie_index", methods={"GET","POST"})
      * @param SortieRepository $sortieRepository
      * @param SiteRepository $siteRepository
      * @param VilleRepository $villeRepository
      * @param LieuRepository $lieuRepository
      * @return Response
      */
-    public function index(SortieRepository $sortieRepository, SiteRepository $siteRepository, VilleRepository $villeRepository, LieuRepository $lieuRepository): Response
+    public function index(SortieRepository $sortieRepository, SiteRepository $siteRepository, VilleRepository $villeRepository, LieuRepository $lieuRepository, Request $request, EntityManagerInterface $em): Response
     {
+        // Etat archivé sur les sorties terminées si +30 jours
+//        foreach ($sortiesTerminees as $laSortieTerminee) {
+//            $interval = date_diff($laSortieTerminee->getDateHeureDebut(), $localDate);
+//
+//            if($interval->format('%R%a') >= '+30'){
+//                $laSortieTerminee->setEtat($etatArchive);
+//                $emi->persist($laSortieTerminee);
+//                $emi->flush();
+//            }
+//        }
+
+        //Filtre
+//        if ($request->getMethod() == 'POST') {
+//            $request->request->get('SortieNom');
+//            dump($_POST);
+//
+//            //dump($post);
+//            return $this->redirectToRoute('sortie_index');
+//        }
+//      }
+
+        $userId=$this->getUser()->getId();
+//        $sortieId=$sortieRepository->find(get());
+//        $UserRepo=$em->getRepository(UserController::class);
+//        $sortieId=$UserRepo->find($this->getUser());
+
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
             'sites' => $siteRepository->findAll(),
             'villes' => $villeRepository->findAll(),
             'lieux' => $lieuRepository->findAll(),
+            'inscrits' => $sortieRepository->findInscriptions($userId),
         ]);
     }
 
@@ -55,7 +82,7 @@ class SortieController extends AbstractController
         //Repo User
         $repoUser = $em->getRepository(UserController::class);
 
-        // Récupère instance de l'utilsiateur connecté
+        // Récupère instance de l'utilsateur connecté
         $user = $repoUser->find($this->getUser());
 
         //dump($user->getSite()->getNom());
@@ -90,10 +117,10 @@ class SortieController extends AbstractController
      */
     public function show(Sortie $sortie, SortieRepository $sortieRepo): Response
     {
-      // $users=$sortie->getId();
+        $users=$sortie->getId();
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
-            //'users' => $sortieRepo->findPseudosSortie($users),
+            'users' => $sortieRepo->findPseudosSortie($users),
         ]);
     }
 
@@ -130,4 +157,41 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('sortie_index');
     }
+
+    /**
+     * @Route("/sortie/inscrire/{id}", name="sinscrire", requirements={"id": "\d+"}, methods={"GET","POST"})
+     */
+    public function sinscrire(EntityManagerInterface $em, Request $request, Sortie $sortie){
+            $user = $em->getRepository(UserController::class)->find($this->getUser()->getId());
+            $inscription = new UserController();
+
+            //$inscription->
+            $inscription->setSortie($sortie);
+            $inscription->setUserController($user);
+
+            $em->persist($inscription);
+            $em->flush();
+            $this->addFlash('success', 'L\'inscription a été faite !');
+            return $this->redirectToRoute('sortie_index');
+    }
+
+
+    /**
+     * @Route("/sortie/desister/{id}", name="desister", requirements={"id": "\d+"}, methods={"GET"})
+     */
+    public function desister(int $id)
+    {
+        $sortieRepository = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepository->find($id);
+
+        // supprime l'utilisateur de la liste des participants
+        $sortie->removeUserControllerSortie($this->getId());
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        //return $this->redirectToRoute('sortie_index');
+        return $this->render('sortie/sortie_index.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
 }
