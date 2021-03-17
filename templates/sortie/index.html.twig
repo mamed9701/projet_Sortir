@@ -90,8 +90,8 @@
         {% for sortie in sorties %}
             <tr>
                 <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
-                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d-m-Y') : '' }}</td>
+                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                 <td>0/{{ sortie.nbInscriptionsMax }}</td>
                 <td>{{ sortie.etatsNoEtat.libelle }}</td>
                 <td style="text-align: center">X</td>
@@ -99,8 +99,7 @@
                     {% if app.user.pseudo is same as (sortie.organisateur.pseudo) %}
                         {{ sortie.organisateur.pseudo }}
                     {% else %}
-{#                        <a href="{{ path('user_controller_index', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>#}
-                         {{ sortie.organisateur.pseudo }}
+                        <a href="{{ path('user_controller_index', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                     {% endif %}
                 </td>
                 <td>
@@ -122,8 +121,8 @@
     <br><br>
     <div class="pure-u-3-24"></div>
     <div class="pure-u-5-24">
-        <a href="{{ path('sortie_new') }}">
-            <button class="pure-button button-xlarge button-success">Créer une sortie</button>
+        <a class="btn btn-success button-xlarge " href="{{ path('sortie_new') }}">
+            Créer une sortie
         </a>&nbsp;
     </div>
     <div class="pure-u-16-24"></div>

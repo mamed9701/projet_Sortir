@@ -5,10 +5,14 @@ namespace App\Form;
 use App\Entity\UserController;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class UserControllerType extends AbstractType
 {
@@ -35,7 +39,7 @@ class UserControllerType extends AbstractType
                 'label' => ' '
             ])
 //            ->add('url_photo')
-        ;
+         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

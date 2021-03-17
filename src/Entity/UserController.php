@@ -9,10 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 use PhpParser\Node\Scalar\String_;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserControllerRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Un compte existe déjà avec cet email")
+ * @UniqueEntity(fields={"pseudo"}, message="Un compte existe déjà avec ce pseudo")
  */
 class UserController implements UserInterface
 {
@@ -50,7 +52,7 @@ class UserController implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $pseudo;
 

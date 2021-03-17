@@ -6,37 +6,37 @@
 
     <div class="pure-u-1-4"></div>
     <div class="pure-u-2-5">
-        {% for sortie in sorties %}
-{#        <h1>{{ sortie.organisateur.pseudo }}</h1>#}
-        <br><br><br>
-        <table class="table">
-            <tbody>
-            <tr>
-                <th>Prenom</th>
-                <td>??</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>??</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>??</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>??</td>
-            </tr>
-            <tr>
-                <th>Ville de rattachement</th>
-                <td>??</td>
-            </tr>
-            </tbody>
-        </table>
+        {% for sortie in infos %}
+            <h1>{{ sortie.pseudo }}</h1>
+            <br><br><br>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Prenom</th>
+                    <td>{{ sortie.prenom }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ sortie.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Telephone</th>
+                    <td>{{ sortie.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ sortie.email }}</td>
+                </tr>
+                <tr>
+                    <th>Ville de rattachement</th>
+                    <td>{{ sortie.site.nom }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br><br>
+            <a href="{{ path('sortie_index') }}" class="btn btn-primary button-xlarge">Retour</a>
 
-        <a href="{{ path('sortie_index') }}" class="button-secondary pure-button button-xlarge pure-input-rounded m-5">Retour</a>
-
-{% endfor %}
+        {% endfor %}
     </div>
 
 {% endblock %}

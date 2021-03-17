@@ -165,7 +165,7 @@ class Sortie
         return $this;
     }
 
-    public function getOrganisateur(): ?UserController
+    public function getorganisateur(): ?UserController
     {
         return $this->organisateur;
     }

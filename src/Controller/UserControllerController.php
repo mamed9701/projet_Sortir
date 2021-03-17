@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 //use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -36,11 +37,10 @@ class UserControllerController extends AbstractController
      */
     public function index(UserControllerRepository $userControllerRepository, UserController $id, UserController $userController): Response
     {
-
         $infos = $userControllerRepository->findOneById($id);
 //        var_dump($infos);
         return $this->render('user_controller/index.html.twig', [
-            'sorties' => $infos
+            'infos' => $infos
         ]);
     }
 
@@ -71,17 +71,25 @@ class UserControllerController extends AbstractController
     /**
      * @Route("/{id}", name="user_controller_show", methods={"GET","POST"})
      * @param UserController $userController
-     * @param UserControllerRepository $repo
-     * @param UserController $id
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @param Request $request
      * @return Response
      */
-    public function show(UserController $userController, UserControllerRepository $repo, UserController $id, Request $request): Response
+    public function show(UserController $userController, UserPasswordEncoderInterface $passwordEncoder, Request $request): Response
     {
         $form = $this->createForm(UserControllerType::class, $userController);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+//            encodage du nouveau password
+            $userController->setPassword(
+                $passwordEncoder->encodePassword(
+                    $userController,
+                    $form->get('password')->getData()
+                )
+            );
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('sortie_index');
