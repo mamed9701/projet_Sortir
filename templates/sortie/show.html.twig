@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container">
 
-        <h1>Sortie</h1>
+        <h1 class="center">Afficher la sortie</h1>
         <div class="row">
             <div class="col-6">
                 <table class="table table-borderless">
@@ -16,11 +16,11 @@
                     </tr>
                     <tr>
                         <th>Date et heure de la sortie :</th>
-                        <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
                     </tr>
                     <tr>
                         <th>Date limite d'inscription :</th>
-                        <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d') : '' }}</td>
+                        <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                     </tr>
                     <tr>
                         <th>Nombre de places :</th>
@@ -70,22 +70,43 @@
             </div>
 
             <div class="container">
-                <table class="table">
-{#                    <tr>{% for user in users %}#}
-                        <th>Pseudo</th>
-                        <th>Nom et prénom</th>
-                    </tr>
-                    <tbody>
-                    <tr>
-{#                        <td>{{ user.pseudo }}</td>#}
-                        <td></td>
-{#                    {% endfor %}</tr>#}
-                    </tbody>
-                </table>
+                <div class="pure-u-7-24">
+                    <h4>Liste des participants inscrits</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Nom et prénom</th>
+                        </tr>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.pseudo }}</td>
+                                <td>{{ user.nom }} {{ user.prenom }}</td>
+
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="9">Personne ne s'est actuellement inscrit</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
 
             <div class="container">
-                <a href="{{ path('sortie_index') }}"><button class="pure-button pure-button-primary">Retour</button></a>&nbsp;
+                <a href="{{ path('sortie_index') }}"><button class="pure-button button-secondary">Retour</button></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {%  if (app.user.id != sortie.organisateur.id) %}
+                    {% if (date() <= (sortie.dateCloture)) %}
+                        <a href="{{ path('sinscrire', {'id': sortie.id}) }}"><button class="pure-button pure-button-primary">S'inscrire à la sortie</button></a>
+                    {% endif %}
+                {% endif %}
+                {#                {% if(app.user.id == sortie.inscrit) %}#}
+                {#                    &nbsp;&nbsp;<a href="{{ path('desister', {'id': sortie.id}) }}') }}"><button class="pure-button pure-button-primary">Se désister</button></a>#}
+                {#                {% endif %}#}
+                {%  if (app.user.id == sortie.organisateur.id) %}
+                    &nbsp;&nbsp;<a href="{{ path('sortie_delete', {'id': sortie.id}) }}"><button class="pure-button button-error">Annuler la sortie</button></a>
+                {% endif %}
+
             </div>
 
         </div>
