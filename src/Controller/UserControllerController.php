@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 
 //use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -75,24 +77,29 @@ class UserControllerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function show(UserController $userController, UserPasswordEncoderInterface $passwordEncoder, Request $request): Response
+    public function show(TokenStorageInterface $tokenStorage, UserController $userController, UserPasswordEncoderInterface $passwordEncoder, Request $request): Response
     {
         $form = $this->createForm(UserControllerType::class, $userController);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
-//            encodage du nouveau password
-            $userController->setPassword(
-                $passwordEncoder->encodePassword(
-                    $userController,
-                    $form->get('password')->getData()
-                )
-            );
+            if ($form->isValid()) {
+                // encodage du nouveau password
+                $userController->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $userController,
+                        $form->get('password')->getData()
+                    )
+                );
+                // envoie des données modifiées dans la BDD
+                $this->getDoctrine()->getManager()->flush();
 
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('sortie_index');
+                return $this->redirectToRoute('sortie_index');
+            } else {
+                // Si le formulaire n'est pas valide : rafraichi la page permettant de sortir de la soumission du formulaire
+                $this->getDoctrine()->getManager()->refresh($userController);
+            }
         }
 
         return $this->render('user_controller/show.html.twig', [
