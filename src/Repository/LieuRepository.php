@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Lieu;
+use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -35,6 +37,17 @@ class LieuRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findRueByVille($id){
+        return $this->createQueryBuilder('r')
+            ->select('r.rue')
+            ->from(Lieu::class, 'l')
+            ->leftJoin(Ville::class, 'v', Join::WITH, 'r.id=v.id')
+            ->where('r.id = :id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Lieu
