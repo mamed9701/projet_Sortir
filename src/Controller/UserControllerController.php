@@ -38,7 +38,6 @@ class UserControllerController extends AbstractController
     public function index(UserControllerRepository $userControllerRepository, UserController $id, UserController $userController): Response
     {
         $infos = $userControllerRepository->findOneById($id);
-//        var_dump($infos);
         return $this->render('user_controller/index.html.twig', [
             'infos' => $infos
         ]);

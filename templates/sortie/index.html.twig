@@ -28,18 +28,18 @@
     <!-- 2ème colonne : champs infos -->
     <div class="pure-u-7-24">
         Site
-        <select>            <!-- Liste déroulante des sites -->
-            <option name=" " selected> </option>
+        <select name="siteNom">            <!-- Liste déroulante des sites -->
+            <option selected> </option>
             {% for site in sites %}
-                <option name="SiteNom">{{ site.nom }}</option>
+                <option value="{{ site.id }}">{{ site.nom }}</option>
             {% endfor %}
         </select>
         <br>
         <br>
-        Le nom de la sortie contient : <input type="text" name="SortieNom" class="pure-input-rounded"
+        Le nom de la sortie contient : <input type="text" name="sortieNom" class="pure-input-rounded"
                                               placeholder="search"><!-- Input -->
         <br><br>
-        Entre <input type="date" name="SortieDateDebut"> et <input type="date" name="SortieDateCloture">
+        Entre <input type="date" name="sortieDateDebut" value="{{ "now"|date("d/m/Y") }}"> et <input type="date" name="sortieDateCloture">
     </div>
 
     <!-- 2ème colonne -->

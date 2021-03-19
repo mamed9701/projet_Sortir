@@ -35,7 +35,7 @@ class SortieController extends AbstractController
      */
     public function index(SortieRepository $sortieRepository, SiteRepository $siteRepository, VilleRepository $villeRepository, LieuRepository $lieuRepository, Request $request, EntityManagerInterface $em): Response
     {
-        // Etat archivé sur les sorties terminées si +30 jours
+//  Etat archivé sur les sorties terminées si +30 jours
 //        foreach ($sortiesTerminees as $laSortieTerminee) {
 //            $interval = date_diff($laSortieTerminee->getDateHeureDebut(), $localDate);
 //
@@ -46,23 +46,34 @@ class SortieController extends AbstractController
 //            }
 //        }
 
-        //Filtre
-//        if ($request->getMethod() == 'POST') {
-//            $request->request->get('SortieNom');
-//            dump($_POST);
-//
-//            //dump($post);
-//            return $this->redirectToRoute('sortie_index');
-//        }
-//      }
+        //Filtre de l'accueil
+            $result = [];
+        if (
+            !$request->request->get('siteNom') &&
+            !$request->request->get('sortieNom') &&
+            !$request->request->get('sortieDateDebut') &&
+            !$request->request->get('sortieDateCloture') &&
+            !$request->request->get('organisateur') &&
+            !$request->request->get('inscrit') &&
+            !$request->request->get('nonInscrit') &&
+            !$request->request->get('sortieEtatPassee')
+        ) {
+            $result = $sortieRepository->findAll();
+        }
+        else {
+             $result=$sortieRepository->findByParameters(
+                $request->request->get('siteNom'),
+                $request->request->get('sortieNom'),
+                $request->request->get('sortieDate1'),
+                $request->request->get('sortieDate2')
+            );
+        }
 
+        //Inscrit
         $userId=$this->getUser()->getId();
-//        $sortieId=$sortieRepository->find(get());
-//        $UserRepo=$em->getRepository(UserController::class);
-//        $sortieId=$UserRepo->find($this->getUser());
 
         return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortieRepository->findAll(),
+            'sorties' => $result,
             'sites' => $siteRepository->findAll(),
             'villes' => $villeRepository->findAll(),
             'lieux' => $lieuRepository->findAll(),
@@ -83,7 +94,7 @@ class SortieController extends AbstractController
         $repoUser = $em->getRepository(UserController::class);
         $villes = $em->getRepository(Ville::class)->findAll();
         // Récupère instance de l'utilsiateur connecté
- 
+
         $user = $repoUser->find($this->getUser());
 
         //dump($user->getSite()->getNom());

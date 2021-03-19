@@ -2,10 +2,15 @@
 
 namespace App\Repository;
 
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\UserController;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
+
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -43,42 +48,32 @@ class SortieRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s');
         $qb->addSelect('c.pseudo');
         $qb->from(UserController::class, 'u');
-        $qb->leftJoin(UserController::class, 'c', Join::WITH, 's.id=c.id');
+        $qb->innerJoin(UserController::class, 'c', Join::WITH, 's.id=c.id');
         $qb->where('s.id = :id');
         $qb->setParameter('id', $id);
         $qb->getQuery()->getResult();
-        // var_dump($qb);
         return $qb;
     }
 
-    // FILTRE de l'accueil
-    public function findByParameters($nom)
-//             public function findByParameters($id, $nom, $from, $to, $isOrganisateur, $isFinie)
+    // Filtre de l'accueil
+    public function findByParameters($site,$nom,$sortieDate1,$sortieDate2)
     {
-        $query = $this->createQueryBuilder("s")
-            ->andWhere("s.nom LIKE :nom")->setParameter("SiteNom", "%$nom%");
-        // if ($campus) { $query->andWhere("s.siteOrganisateur = :campus")->setParameter("site", $campus); }
-        // if ($from) { $query->andWhere("s.dateHeureDebut >= :debut")->setParameter("debut", $from); }
-        // if ($to) { $query->andWhere("s.dateHeureDebut <= :fin")->setParameter("fin", $to); }
-        // if ($isOrganisateur) { $query->andWhere("s.organisateur = :organisateur")->setParameter("organisateur", $id); }
-        //if ($isInscrit) { $query->andWhere(":isInscrit MEMBER OF s.participants")->setParameter("isInscrit", $id); }
-        //if ($isNotInscrit) { $query->andWhere(":isNotInscrit NOT MEMBER OF s.participants")->setParameter("isNotInscrit", $id);; }
-        // if ($isFinie) { $query->andWhere("s.etat = :etat")->setParameter("etat", 5); }
+        $query = $this -> createQueryBuilder("s");
+
+        if ($site) {
+            $query -> andWhere("s.site_organisateur = :site")->setParameter("site", $site);
+        }
+
+        if ($nom){
+            $query -> andWhere("s.nom LIKE :nom")->setParameter("nom", "%$nom%");
+        }
+
+        if ($sortieDate1 && $sortieDate2) {
+            $query -> andWhere("s.date_debut BETWEEN :dateD AND :dateF")->setParameter("dateD", $sortieDate2)->setParameter("dateF", $sortieDate1);
+        }
         return $query->getQuery()->getResult();
     }
 
-    /*
-        SELECT *
-        FROM sortie
-        INNER JOIN
-            user_controller ON sortie.organisateur_id=user_controller.id
-            etat ON sortie.etats_no_etat_id=etat.id
-        WHERE
-         //si l'etat
-            etat = "passée"
-         //si on est l'organisateur
-            sortie.organisateur_id = user_controller:id
-         */
 
 //    public function inscription()
 //    {
