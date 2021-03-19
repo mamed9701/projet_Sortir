@@ -12,7 +12,7 @@
     <button class="btn btn-success button-xlarge">{{ button_label|default('Enregistrer') }}</button>
     &nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp<a class = "btn btn-primary" href="{{ path('sortie_index') }}"> Publier la sortie </a>
     <a class = "btn btn-danger button-xlarge" href="{{ path('sortie_index') }}"> Annuler </a>
 
 </div>
@@ -20,7 +20,7 @@
 <div class="pure-u-1-4 pure-form pure-form-stacked">
     Ville Organisatrice : {{ app.user.site.nom}}
     <br><br>
-    {{ form_row(form.villes_no_ville)}}
+    {{ form_it pullrow(form.villes_no_ville)}}
     {{ form_row(form.lieux_noLieu)}}
     <a href="{{ path("lieu_new") }}" class="btn btn-success">Ajouter un lieu <i class="fas fa-plus"></i></a>
     <br><br>
