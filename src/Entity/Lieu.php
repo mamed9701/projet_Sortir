@@ -40,15 +40,17 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ville::class)
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieu", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $villes_no_ville;
 
     /**
-     * @ORM\OneToMany(targetEntity=sortie::class, mappedBy="lieux_noLieu")
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="lieux_noLieu")
      */
     private $sorties;
+
+
 
     public function __construct()
     {
@@ -149,8 +151,8 @@ class Lieu
 
         return $this;
     }
-//    public function __toString(){
-//        return $this->nom;
-//    }
+    public function __toString(){
+        return $this->nom;
+    }
 
 }

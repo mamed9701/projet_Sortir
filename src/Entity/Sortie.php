@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -53,11 +54,10 @@ class Sortie
     private $url_photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UserController::class)
+     * @ORM\ManyToOne(targetEntity=UserController::class, inversedBy="sortie")
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
-
 
     /**
      * @ORM\ManyToOne(targetEntity=Etat::class)
@@ -74,8 +74,10 @@ class Sortie
     /**
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $lieux_noLieu;
+
 
     public function getId(): ?int
     {
@@ -87,7 +89,7 @@ class Sortie
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -99,7 +101,7 @@ class Sortie
         return $this->date_debut;
     }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): self
+    public function setDateDebut(?\DateTimeInterface $date_debut): self
     {
         $this->date_debut = $date_debut;
 
@@ -123,7 +125,7 @@ class Sortie
         return $this->date_cloture;
     }
 
-    public function setDateCloture(\DateTimeInterface $date_cloture): self
+    public function setDateCloture($date_cloture): self
     {
         $this->date_cloture = $date_cloture;
 
@@ -135,7 +137,7 @@ class Sortie
         return $this->nb_inscriptions_max;
     }
 
-    public function setNbInscriptionsMax(int $nb_inscriptions_max): self
+    public function setNbInscriptionsMax(?int $nb_inscriptions_max): self
     {
         $this->nb_inscriptions_max = $nb_inscriptions_max;
 
@@ -166,7 +168,7 @@ class Sortie
         return $this;
     }
 
-    public function getorganisateur(): ?UserController
+    public function getOrganisateur(): ?UserController
     {
         return $this->organisateur;
     }
@@ -213,4 +215,6 @@ class Sortie
 
         return $this;
     }
+
+
 }
