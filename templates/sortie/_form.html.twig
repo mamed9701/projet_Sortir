@@ -7,11 +7,14 @@
     {{ form_row(form.nb_inscriptions_max)}}
     {{ form_row(form.duree)}}
     {{ form_row(form.description_infos)}}
-    <br><br>
+    
+    <br><br><br>
+    <button class="btn btn-success button-xlarge">{{ button_label|default('Enregistrer') }}</button>
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <a class = "btn btn-danger button-xlarge" href="{{ path('sortie_index') }}"> Annuler </a>
 
-    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
-    <a class = "btn btn-primary" href="{{ path('sortie_index') }}"> Publier la sortie </a>
-    <a class = "btn btn-warning" href="{{ path('sortie_index') }}"> Annuler </a>
 </div>
 <div class="pure-u-1-8"></div>
 <div class="pure-u-1-4 pure-form pure-form-stacked">

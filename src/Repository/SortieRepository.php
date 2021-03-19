@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use App\Entity\UserController;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -41,44 +42,56 @@ class SortieRepository extends ServiceEntityRepository
     public function findTypeUser(int $id)
     {
         $qb = $this->createQueryBuilder('s');
-        $qb->addSelect('c.pseudo');
-        $qb->from(UserController::class, 'u');
-        $qb->leftJoin(UserController::class, 'c', Join::WITH, 's.id=c.id');
-        $qb->where('s.id = :id');
+        $qb->innerJoin(UserController::class, 'u', Join::WITH, 'u.id=s.id');
+        $qb->where('u.id = :id');
         $qb->setParameter('id', $id);
         $qb->getQuery()->getResult();
         // var_dump($qb);
         return $qb;
     }
 
-    // FILTRE de l'accueil
-    public function findByParameters($nom)
-//             public function findByParameters($id, $nom, $from, $to, $isOrganisateur, $isFinie)
+
+// -------------- Filtres de l'accueil ---------------------------
+
+    public function findByParameters($site,$search,$sortieDate1,$sortieDate2,$organisateur,$inscrit,$sortieEtatPassee)
     {
-        $query = $this->createQueryBuilder("s")
-            ->andWhere("s.nom LIKE :nom")->setParameter("SiteNom", "%$nom%");
-        // if ($campus) { $query->andWhere("s.siteOrganisateur = :campus")->setParameter("site", $campus); }
-        // if ($from) { $query->andWhere("s.dateHeureDebut >= :debut")->setParameter("debut", $from); }
-        // if ($to) { $query->andWhere("s.dateHeureDebut <= :fin")->setParameter("fin", $to); }
-        // if ($isOrganisateur) { $query->andWhere("s.organisateur = :organisateur")->setParameter("organisateur", $id); }
-        //if ($isInscrit) { $query->andWhere(":isInscrit MEMBER OF s.participants")->setParameter("isInscrit", $id); }
-        //if ($isNotInscrit) { $query->andWhere(":isNotInscrit NOT MEMBER OF s.participants")->setParameter("isNotInscrit", $id);; }
-        // if ($isFinie) { $query->andWhere("s.etat = :etat")->setParameter("etat", 5); }
+        $query = $this -> createQueryBuilder("s");
+
+        if ($site) {
+            $query -> andWhere("s.site_organisateur = :site")->setParameter("site", $site);
+        }
+
+        if ($search){
+            $query -> andWhere("s.nom LIKE :nom")->setParameter("nom", "%$search%");
+        }
+
+        if ($sortieDate1 && $sortieDate2) {
+            $query -> andWhere("s.date_debut BETWEEN :dateD AND :dateF")->setParameter("dateD", $sortieDate1)->setParameter("dateF", $sortieDate2);
+        }
+
+        if ($organisateur) {
+            $query->andWhere("s.organisateur = :organisateur")->setParameter("organisateur", $organisateur);
+        }
+
+        if ($inscrit) {
+            $query
+                ->innerJoin(UserController::class, 'u', Join::WITH, 's.id=u.id')
+                ->andWhere("u.id = :inscrit")->setParameter("inscrit", $inscrit);
+        }
+
+        if ($sortieEtatPassee) {
+            $query->andWhere("s.etats_no_etat = :etat")->setParameter("etat", 5);
+        }
+
         return $query->getQuery()->getResult();
     }
 
-    /*
-        SELECT *
-        FROM sortie
-        INNER JOIN
-            user_controller ON sortie.organisateur_id=user_controller.id
-            etat ON sortie.etats_no_etat_id=etat.id
-        WHERE
-         //si l'etat
-            etat = "passée"
-         //si on est l'organisateur
-            sortie.organisateur_id = user_controller:id
-         */
+//SELECT * FROM `sortie`
+// inner join user_controller_sortie on `sortie_id` = sortie.id
+// inner join user_controller on user_controller.`id` = user_controller_sortie.user_controller_id
+// where user_controller.id = 8
+
+
 
 //    public function inscription()
 //    {
@@ -118,9 +131,9 @@ class SortieRepository extends ServiceEntityRepository
         $sql = "SELECT * FROM user_controller_sortie WHERE user_controller_id = :Uid";
         //$sql = "SELECT * FROM user_controller_sortie WHERE user_controller_id = :Uid and sortie_id=:Sid";
         $stmt = $conn->prepare($sql);
-       // $stmt->execute(['Uid' => $Userid,'Sid'=>$Sortieid]);
+        // $stmt->execute(['Uid' => $Userid,'Sid'=>$Sortieid]);
         $stmt->execute(['Uid' => $Userid]);
-        $inscrit= $stmt->fetch();
+        $inscrit = $stmt->fetch();
         return $inscrit;
 
 //        return $this->createQueryBuilder('u')

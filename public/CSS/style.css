@@ -3,6 +3,11 @@
 .texty{
     font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
     font-size:large;
+
+
+#table{
+    width: auto;
+
 }
 
 .center{

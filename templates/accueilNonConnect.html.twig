@@ -17,10 +17,6 @@
           integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
           crossorigin="anonymous"/>
 
-    {% block javascripts %}
-        {# {{ encore_entry_script_tags('app') }} #}
-    {% endblock %}
-
     <style>
         body {
             background-image:url(https://c2.staticflickr.com/6/5515/9199788659_818383d0b8_k.jpg);
@@ -46,11 +42,11 @@
         </ul>
     </div>
 </div>
-<br>
-<br>
+<br><br><br><br><br><br><br><br>
 
-{% block body %}
+
     <div class="container">
+        <div class="row">
         <table class="pure-table pure-table-horizontal">
             <thead>
             <tr>
@@ -72,7 +68,7 @@
                     <td>0/{{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.etatsNoEtat.libelle }}</td>
                     <td style="text-align: center">X</td>
-                    <td>{{ sortie.organisateur.nom }}</td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
                 </tr>
             {% else %}
                 <tr>
@@ -82,9 +78,8 @@
             </tbody>
         </table>
     </div>
-    <br><br>
+    </div>
 
-{% endblock %}
 
 </body>
 </html>

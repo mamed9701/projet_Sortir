@@ -4,134 +4,137 @@
 
 {% block body %}
 
-<div id="date">
-    Date du jour : {{ "now"|date("d/m/Y") }}
-    <br>
-    <!-- Nom et prénom de la personne connectée -->
-    <!-- nom ? nom et prénom ? pseudo ? -->
-    Participant : {{ app.user.prenom }} {{ app.user.nom }}
-</div>
+    <div id="date">
+        Date du jour : {{ "now"|date("d/m/Y") }}
+        <br>
+        <!-- Nom et prénom de la personne connectée -->
+        <!-- nom ? nom et prénom ? pseudo ? -->
+        Participant : {{ app.user.prenom }} {{ app.user.nom }}
+    </div>
 
-<!-- 1ère colonne : espacement du bord droit -->
-<div class="pure-u-4-24"></div>
-<!--  2ème colonne : titre -->
-<div class="pure-u-5-24">
-    <h1>Filtrer les sorties</h1>
-</div>
-<!-- 3ème colonne : blanc jusqu'au bord gauche -->
-<div class="pure-u-15-24" id="date"></div>
-<br><br>
-
-<form class="pure-form" action="{{ path('sortie_index') }}" method="POST">
-    <!--1ère colonne : espacement du bord droit -->
+    <!-- 1ère colonne : espacement du bord droit -->
     <div class="pure-u-4-24"></div>
-    <!-- 2ème colonne : champs infos -->
-    <div class="pure-u-7-24">
-        Site
-        <select>            <!-- Liste déroulante des sites -->
-            <option name=" " selected> </option>
-            {% for site in sites %}
-                <option name="SiteNom">{{ site.nom }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <br>
-        Le nom de la sortie contient : <input type="text" name="SortieNom" class="pure-input-rounded"
-                                              placeholder="search"><!-- Input -->
-        <br><br>
-        Entre <input type="date" name="SortieDateDebut"> et <input type="date" name="SortieDateCloture">
-    </div>
-
-    <!-- 2ème colonne -->
+    <!--  2ème colonne : titre -->
     <div class="pure-u-5-24">
-        <label for="checkbox-radio-option-one" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-one" value="SortieOrganisateur"/> Sorties dont je suis
-            l'organisateur/trice</label>
-        <label for="checkbox-radio-option-two" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-two" value="2"/> Sorties auxquelles je suis
-            inscrit/e</label>
-
-        <label for="checkbox-radio-option-three" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-three" value="3"/> Sorties auxquelles je ne
-            suis pas inscrit/e</label>
-        <label for="checkbox-radio-option-four" class="pure-checkbox">
-            <input type="checkbox" id="checkbox-radio-option-four" value="SortieEtatPassee"/> Sorties passées</label>
+        <h1>Filtrer les sorties</h1>
     </div>
+    <!-- 3ème colonne : blanc jusqu'au bord gauche -->
+    <div class="pure-u-15-24" id="date"></div>
+    <br><br>
 
-    <!-- 3ème colonne -->
-    <div class="pure-u-5-24">
-        <br><br>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button
-                class="pure-button pure-button-primary button-xlarge pure-input-rounded">Rechercher
-        </button>
-    </div>
-    </div>
-</form>
-</div>
-<br>
+    <form class="pure-form" action="{{ path('sortie_index') }}" method="POST">
+        <!--1ère colonne : espacement du bord droit -->
+        <div class="pure-u-4-24"></div>
+        <!-- 2ème colonne : champs infos -->
+        <div class="pure-u-7-24">
+            Site
+            <select name="siteNom">            <!-- Liste déroulante des sites -->
+                <option selected> </option>
+                {% for site in sites %}
+                    <option value="{{ site.id }}">{{ site.nom }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <br>
+            Le nom de la sortie contient : <input type="text" name="sortieSearch" class="pure-input-rounded"
+                                                  placeholder="search"><!-- Input -->
+            <br><br>
+            Entre <input type="date" name="sortieDate1" value="{{ "now"|date("d/m/Y") }}"> et <input type="date" name="sortieDate2">
+        </div>
 
-<div class="pure-u-4-24"></div>
-<div class="pure-u-15-24">
-    <table class="pure-table pure-table-horizontal">
-        <thead>
-        <tr>
-            <th>Nom de la sortie</th>
-            <th>Date de la sortie</th>
-            <th>Cloture</th>
-            <th>Inscriptions/places</th>
-            <th>Etat</th>
-            <th>Inscrit</th>
-            <th>Organisateur</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sorties %}
+        <!-- 2ème colonne -->
+        <div class="pure-u-5-24">
+            <label for="checkbox-radio-option-one" class="pure-checkbox">
+                <input type="checkbox" id="checkbox-radio-option-one" name="organisateur"/> Sorties dont je suis
+                l'organisateur/trice</label>
+            <label for="checkbox-radio-option-two" class="pure-checkbox">
+                <input type="checkbox" id="checkbox-radio-option-two" name="inscrit"/> Sorties auxquelles je
+                suis
+                inscrit/e</label>
+            <label for="checkbox-radio-option-three" class="pure-checkbox">
+                <input type="checkbox" id="checkbox-radio-option-three" name="nonInscrit"/> Sorties auxquelles
+                je ne
+                suis pas inscrit/e</label>
+            <label for="checkbox-radio-option-four" class="pure-checkbox">
+                <input type="checkbox" id="checkbox-radio-option-four" name="sortieEtatPassee"/> Sorties
+                passées</label>
+        </div>
+
+        <!-- 3ème colonne -->
+        <div class="pure-u-5-24">
+            <br><br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button
+                    class="pure-button pure-button-primary button-xlarge pure-input-rounded">Rechercher
+            </button>
+        </div>
+        </div>
+    </form>
+    </div>
+    <br>
+
+{#    <div class="pure-u-4-24"></div>#}
+    <div class="container">
+{#    <div class="pure-u-16-24">#}
+        <table id="table" class="pure-table pure-table-horizontal">
+            <thead>
             <tr>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
-                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
-                <td>0/{{ sortie.nbInscriptionsMax }}</td>
-                <td>{{ sortie.etatsNoEtat.libelle }}</td>
-                <td>
-{#                                       {% for sortie in sorties %}#}
-                                            {% if inscrits %}
-                                               X
-                                            {% else %}
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscriptions/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
+                    <td>0/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etatsNoEtat.libelle }}</td>
+                    <td>
+                        {# {% for sortie in sorties %} #}
+                        {% if inscrits %}
+                            X
+                        {% else %}
 
-                                            {% endif %}
-{#                                       {% endfor %}#}
-                </td>
-
-                <td>
-                    {% if app.user.pseudo is same as (sortie.organisateur.pseudo) %}
-                        {{ sortie.organisateur.pseudo }}
-                    {% else %}
-                        <a href="{{ path('user_controller_index', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
-                    {%  if (app.user.id == sortie.organisateur.id) %}
-                        <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
-                        {{ include('sortie/_cancel.html.twig') }}
-                    {% endif %}
-                    {%  if (app.user.id != sortie.organisateur.id) %}
-                        {% if (date() <= (sortie.dateCloture)) %}
-                            <a href="{{ path('sinscrire', {'id': sortie.id}) }}">S'inscrire</a>
                         {% endif %}
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">Aucune sortie enregistrée</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        {# </div> #}
+                        {# {% endfor %} #}
+                    </td>
+                    <td>
+                        {% if app.user.pseudo is same as (sortie.organisateur.pseudo) %}
+                            {{ sortie.organisateur.pseudo }}
+                        {% else %}
+                            <a href="{{ path('user_controller_index', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
+                        {% if (app.user.id == sortie.organisateur.id) %}
+                            <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
+                            <a href="">Annuler</a>
+                        {% endif %}
+                        {% if (app.user.id != sortie.organisateur.id) %}
+                            {% if (date() <= (sortie.dateCloture)) %}
+                                <a href="{{ path('sinscrire', {'id': sortie.id}) }}">S'inscrire</a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucune sortie enregistrée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+    </div>
+{#    </div>#}
     </table>
-    <div class="pure-u-3-24"></div>
+{#    <div class="pure-u-3-24"></div>#}
 
     <br><br>
     <div class="pure-u-3-24"></div>
@@ -142,4 +145,4 @@
     </div>
     <div class="pure-u-16-24"></div>
 
-    {% endblock %}
+{% endblock %}
