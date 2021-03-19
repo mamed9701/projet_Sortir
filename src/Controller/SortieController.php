@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\UserController;
 use App\Entity\Ville;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
@@ -121,31 +124,39 @@ var_dump($request->request->get('inscrit') ? $this->getUser()->getId() : "");
     /**
      * @Route("/new", name="sortie_new", methods={"GET","POST"})
      * @param Request $request
-     * @param SortieRepository $repo
+     * @param LieuRepository $lieuRepository
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function new(Request $request, SortieRepository $repo, EntityManagerInterface $em): Response
+    public function new(Request $request, LieuRepository $lieuRepository, EntityManagerInterface $em): Response
     {
         //Repo User
         $repoUser = $em->getRepository(UserController::class);
         $villes = $em->getRepository(Ville::class)->findAll();
+
+//        $repoLieu = $em->getRepository(Lieu::class);
+//        $lieu = $repoLieu->findRueByVille();
+
+
         // Récupère instance de l'utilsiateur connecté
 
         $user = $repoUser->find($this->getUser());
 
-        //dump($user->getSite()->getNom());
 
         $sortie = new Sortie();
+//        $etatRepo = $em->getRepository(Etat::class);
+//        $etat = $etatRepo->find(1);
+//        $sortie->setEtatsNoEtat($etat);
         $sortie->setSiteOrganisateur($user->getSite());
+        $sortie->setOrganisateur($user);
 
         $form = $this->createForm(SortieType::class, $sortie);
 
 //        $repo = $em->getRepository(Sortie::class);
-        dump($request);
+//        dump($request);
 
         $form->handleRequest($request);
-        dump($sortie);
+//        dump($sortie);
 //        $sortie->setSiteOrganisateur($repo->findVille());
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -158,6 +169,7 @@ var_dump($request->request->get('inscrit') ? $this->getUser()->getId() : "");
         return $this->render('sortie/new.html.twig', [
             'sortie' => $sortie,
             'villes' => $villes,
+//            'lieux' => $lieuRepository->findAll(),
             'form' => $form->createView(),
         ]);
     }
@@ -171,16 +183,23 @@ var_dump($request->request->get('inscrit') ? $this->getUser()->getId() : "");
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
             'users' => $sortieRepo->findPseudosSortie($users),
+
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="sortie_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Sortie $sortie
+     * @param EntityManagerInterface $em
+     * @return Response
      */
-    public function edit(Request $request, Sortie $sortie): Response
+    public function edit(Request $request, Sortie $sortie, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
+        $villes = $em->getRepository(Ville::class)->findAll();
+        $lieux = $em->getRepository(Lieu::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -191,6 +210,9 @@ var_dump($request->request->get('inscrit') ? $this->getUser()->getId() : "");
         return $this->render('sortie/edit.html.twig', [
             'sortie' => $sortie,
             'form' => $form->createView(),
+            'villes' => $villes,
+            'lieux' => $lieux,
+
         ]);
     }
 

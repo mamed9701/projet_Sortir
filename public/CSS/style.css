@@ -3,10 +3,11 @@
 .texty{
     font-family: 'Josefin Slab', 'Myriad Pro', Arial, sans-serif;
     font-size:large;
-}
+
 
 #table{
     width: auto;
+
 }
 
 .center{
@@ -15,6 +16,10 @@
 
 #date{
     float:right;
+}
+
+.supprimer{
+    margin-left: 37.5%;
 }
 
 tr{

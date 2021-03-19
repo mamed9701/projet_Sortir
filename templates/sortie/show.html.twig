@@ -46,6 +46,10 @@
                         <td>{{ sortie.siteOrganisateur.nom }}</td>
                     </tr>
                     <tr>
+                        <th>Ville :</th>
+                        <td>{{ sortie.lieuxNoLieu.villesNoVille.nom}}</td>
+                    </tr>
+                    <tr>
                         <th>Lieu :</th>
                         <td>{{ sortie.lieuxNoLieu.nom }}</td>
                     </tr>
@@ -112,7 +116,7 @@
                 {#                    &nbsp;&nbsp;<a href="{{ path('desister', {'id': sortie.id}) }}') }}"><button class="pure-button pure-button-primary">Se désister</button></a>#}
                 {#                {% endif %}#}
                 {%  if (app.user.id == sortie.organisateur.id) %}
-                    &nbsp;&nbsp;<a href="{{ path('sortie_delete', {'id': sortie.id}) }}"><button class="pure-button button-error">Annuler la sortie</button></a>
+                    &nbsp;&nbsp;<a href="{{ path('sortie_delete', {'id': sortie.id}) }}" class="btn btn-danger">Annuler la sortie</a>
                 {% endif %}
 
             </div>
