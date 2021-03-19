@@ -71,6 +71,7 @@
 
             <div class="container">
                 <div class="pure-u-7-24">
+                    <br><br>
                     <h4>Liste des participants inscrits</h4>
                     <table class="table">
                         <tr>
@@ -79,7 +80,14 @@
                         </tr>
                         {% for user in users %}
                             <tr>
-                                <td>{{ user.pseudo }}</td>
+{#                                <td>{{ user.pseudo }}</td>#}
+                                <td>
+                                    {% if app.user.pseudo is same as user.pseudo %}
+                                        {{ user.pseudo }}
+                                    {% else %}
+                                        <a href="{{ path('user_controller_index', {'id': user.id}) }}">{{ user.pseudo }}</a>
+                                    {% endif %}
+                                </td>
                                 <td>{{ user.nom }} {{ user.prenom }}</td>
 
                             </tr>
@@ -93,7 +101,7 @@
             </div>
 
             <div class="container">
-                <a href="{{ path('sortie_index') }}"><button class="pure-button button-secondary">Retour</button></a>
+                <a href="{{ path('sortie_index') }}"><button class="pure-button button-secondary button-xlarge">Retour</button></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 {%  if (app.user.id != sortie.organisateur.id) %}
                     {% if (date() <= (sortie.dateCloture)) %}
