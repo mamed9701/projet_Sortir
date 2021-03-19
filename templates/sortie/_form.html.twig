@@ -1,4 +1,39 @@
 {{ form_start(form) }}
+<div class="pure-u-1-5"></div>
+<div class="pure-u-1-4">
+    {{ form_row(form.nom) }}
+    {{ form_row(form.date_debut)}}
+    {{ form_row(form.date_cloture)}}
+    {{ form_row(form.nb_inscriptions_max)}}
+    {{ form_row(form.duree)}}
+    {{ form_row(form.description_infos)}}
+    
+    <br><br><br>
+    <button class="btn btn-success button-xlarge">{{ button_label|default('Enregistrer') }}</button>
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <a class = "btn btn-danger button-xlarge" href="{{ path('sortie_index') }}"> Annuler </a>
+
+</div>
+<div class="pure-u-1-8"></div>
+<div class="pure-u-1-4 pure-form pure-form-stacked">
+    Ville Organisatrice : {{ app.user.site.nom}}
+    <br><br>
+    {{ form_row(form.villes_no_ville)}}
+    {{ form_row(form.lieux_noLieu)}}
+    <a href="{{ path("lieu_new") }}" class="btn btn-success">Ajouter un lieu <i class="fas fa-plus"></i></a>
+    <br><br>
+    {{ form_row(form.etats_no_etat)}}
+
+    <script>
+        // $(document).ready(function (){
+        //     function load
+        // })
+    </script>
+
+</div>
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
 {{ form_end(form) }}
+

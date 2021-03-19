@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-2-5">
+        <h1>Ajouter un participant</h1>
+    </div>
+    <div class="pure-u-1-5"></div>
+    <br>
+    <br>
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-1-4">
+        {{ form_start(registrationForm) }}
+
+        {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.telephone) }}
+    </div>
+
+    <div class="pure-u-1-8"></div>
+
+    <div class="pure-u-1-4">
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password) }}
+        {{ form_row(registrationForm.site) }}
+    </div>
+    <br>
+    <br>
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-2-5">
+        {{ form_row(registrationForm.actif) }}
+    </div>
+    <div class="pure-u-1-5"></div>
+
+    <br><br>
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-1-4">
+        <button type="submit" class="button-success pure-button button-xlarge">Enregistrer</button>
+    </div>
+    {{ form_end(registrationForm) }}
+
+
+
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+{% endblock %}

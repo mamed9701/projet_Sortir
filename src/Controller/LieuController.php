@@ -15,18 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LieuController extends AbstractController
 {
-    /**
-     * @Route("/", name="lieu_index", methods={"GET"})
-     */
-    public function index(LieuRepository $lieuRepository): Response
-    {
-        return $this->render('lieu/index.html.twig', [
-            'lieus' => $lieuRepository->findAll(),
-        ]);
-    }
+//    /**
+//     * @Route("/", name="lieu_index", methods={"GET"})
+//     */
+//    public function index(LieuRepository $lieuRepository): Response
+//    {
+//        return $this->render('/home.html.twig', [
+//            'lieus' => $lieuRepository->findAll(),
+//        ]);
+//    }
 
     /**
-     * @Route("/new", name="lieu_new", methods={"GET","POST"})
+     * @Route("/", name="lieu_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -39,7 +39,7 @@ class LieuController extends AbstractController
             $entityManager->persist($lieu);
             $entityManager->flush();
 
-            return $this->redirectToRoute('lieu_index');
+            return $this->redirectToRoute('sortie_new');
         }
 
         return $this->render('lieu/new.html.twig', [

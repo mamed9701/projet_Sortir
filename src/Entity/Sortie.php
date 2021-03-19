@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -33,7 +34,7 @@ class Sortie
     private $duree;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $date_cloture;
 
@@ -53,22 +54,30 @@ class Sortie
     private $url_photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participant::class)
+     * @ORM\ManyToOne(targetEntity=UserController::class, inversedBy="sortie")
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $lieux_no_lieu;
 
     /**
      * @ORM\ManyToOne(targetEntity=Etat::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $etats_no_etat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site_organisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $lieux_noLieu;
+
 
     public function getId(): ?int
     {
@@ -80,7 +89,7 @@ class Sortie
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -92,7 +101,7 @@ class Sortie
         return $this->date_debut;
     }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): self
+    public function setDateDebut(?\DateTimeInterface $date_debut): self
     {
         $this->date_debut = $date_debut;
 
@@ -116,7 +125,7 @@ class Sortie
         return $this->date_cloture;
     }
 
-    public function setDateCloture(\DateTimeInterface $date_cloture): self
+    public function setDateCloture($date_cloture): self
     {
         $this->date_cloture = $date_cloture;
 
@@ -128,7 +137,7 @@ class Sortie
         return $this->nb_inscriptions_max;
     }
 
-    public function setNbInscriptionsMax(int $nb_inscriptions_max): self
+    public function setNbInscriptionsMax(?int $nb_inscriptions_max): self
     {
         $this->nb_inscriptions_max = $nb_inscriptions_max;
 
@@ -159,26 +168,26 @@ class Sortie
         return $this;
     }
 
-    public function getOrganisateur(): ?Participant
+    public function getOrganisateur(): ?UserController
     {
         return $this->organisateur;
     }
 
-    public function setOrganisateur(?Participant $organisateur): self
+    public function setOrganisateur(?UserController $organisateur): self
     {
         $this->organisateur = $organisateur;
 
         return $this;
     }
 
-    public function getLieuxNoLieu(): ?Lieu
+    public function getLieuxNolieu(): ?Lieu
     {
-        return $this->lieux_no_lieu;
+        return $this->lieux_noLieu;
     }
 
-    public function setLieuxNoLieu(?Lieu $lieux_no_lieu): self
+    public function setLieuxNoLieu(?Lieu $lieux_noLieu): self
     {
-        $this->lieux_no_lieu = $lieux_no_lieu;
+        $this->lieux_noLieu = $lieux_noLieu;
 
         return $this;
     }
@@ -194,4 +203,18 @@ class Sortie
 
         return $this;
     }
+
+    public function getSiteorganisateur(): ?Site
+    {
+        return $this->site_organisateur;
+    }
+
+    public function setSiteOrganisateur(?Site $site_organisateur): self
+    {
+        $this->site_organisateur = $site_organisateur;
+
+        return $this;
+    }
+
+
 }

@@ -36,6 +36,16 @@ class EtatRepository extends ServiceEntityRepository
     }
     */
 
+    public function findEtatCreated(int $id)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     /*
     public function findOneBySomeField($value): ?Etat
     {

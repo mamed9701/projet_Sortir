@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"
+          integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+    <link href="{{ asset('CSS/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+          crossorigin="anonymous"/>
+
+    <style>
+        body {
+            background-image:url(https://c2.staticflickr.com/6/5515/9199788659_818383d0b8_k.jpg);
+        }
+        .header{
+            background-color: white;
+         }
+    </style>
+</head>
+
+<body class="texty">
+{% set route_name = app.request.attributes.get('_route') %}
+
+<div class="header">
+    <div class="pure-menu pure-menu-horizontal">
+        <span style="font-size: 30px; "><i class="fab fa-angellist"></i>&nbsp;Sortir.com</span>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected {% if route_name == "app_login" %}active{% endif %}">
+                <a href="{{ path('app_login') }}" class="pure-menu-link">Se connecter</a>
+                {% if route_name == "app_login" %}<span class="sr-only">(current)</span>{% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br>
+
+
+    <div class="container">
+        <div class="row">
+        <table class="pure-table pure-table-horizontal">
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Cloture</th>
+                <th>Inscriptions/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
+                    <td>0/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etatsNoEtat.libelle }}</td>
+                    <td style="text-align: center">X</td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+</body>
+</html>

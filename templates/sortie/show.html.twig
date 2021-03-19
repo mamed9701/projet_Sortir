@@ -3,48 +3,116 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-    <h1>Sortie</h1>
+    <div class="container">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sortie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr>
-                <th>Date_debut</th>
-                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ sortie.duree }}</td>
-            </tr>
-            <tr>
-                <th>Date_cloture</th>
-                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nb_inscriptions_max</th>
-                <td>{{ sortie.nbInscriptionsMax }}</td>
-            </tr>
-            <tr>
-                <th>Description_infos</th>
-                <td>{{ sortie.descriptionInfos }}</td>
-            </tr>
-            <tr>
-                <th>Url_photo</th>
-                <td>{{ sortie.urlPhoto }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <h1 class="center">Afficher la sortie</h1>
+        <div class="row">
+            <div class="col-6">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th>Nom :</th>
+                        <td>{{ sortie.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date et heure de la sortie :</th>
+                        <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date limite d'inscription :</th>
+                        <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre de places :</th>
+                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                    </tr>
+                    <tr>
+                        <th>Durée :</th>
+                        <td>{{ sortie.duree }} minutes</td>
+                    </tr>
+                    <tr>
+                        <th>Description et infos :</th>
+                        <td>{{ sortie.descriptionInfos }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <a href="{{ path('sortie_index') }}">back to list</a>
+            <div class="col-6">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th>Ville organisatrice :</th>
+                        <td>{{ sortie.siteOrganisateur.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ville :</th>
+                        <td>{{ sortie.lieuxNoLieu.villesNoVille.nom}}</td>
+                    </tr>
+                    <tr>
+                        <th>Lieu :</th>
+                        <td>{{ sortie.lieuxNoLieu.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rue :</th>
+                        <td>{{ sortie.lieuxNoLieu.rue }}</td>
+                    </tr>
+                    <tr>
+                        <th>Code postal :</th>
+                        <td>{{ sortie.lieuxNoLieu.villesNoVille.codePostal }}</td>
+                    </tr>
+                    <tr>
+                        <th>Latitude :</th>
+                        <td>{{ sortie.lieuxNoLieu.latitude }}</td>
+                    </tr>
+                    <tr>
+                        <th>Longitude :</th>
+                        <td>{{ sortie.lieuxNoLieu.longitude }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">edit</a>
+            <div class="container">
+                <div class="pure-u-7-24">
+                    <h4>Liste des participants inscrits</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Nom et prénom</th>
+                        </tr>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.pseudo }}</td>
+                                <td>{{ user.nom }} {{ user.prenom }}</td>
 
-    {{ include('sortie/_delete_form.html.twig') }}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="9">Personne ne s'est actuellement inscrit</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+            <div class="container">
+                <a href="{{ path('sortie_index') }}"><button class="pure-button button-secondary">Retour</button></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {%  if (app.user.id != sortie.organisateur.id) %}
+                    {% if (date() <= (sortie.dateCloture)) %}
+                        <a href="{{ path('sinscrire', {'id': sortie.id}) }}"><button class="pure-button pure-button-primary">S'inscrire à la sortie</button></a>
+                    {% endif %}
+                {% endif %}
+                {#                {% if(app.user.id == sortie.inscrit) %}#}
+                {#                    &nbsp;&nbsp;<a href="{{ path('desister', {'id': sortie.id}) }}') }}"><button class="pure-button pure-button-primary">Se désister</button></a>#}
+                {#                {% endif %}#}
+                {%  if (app.user.id == sortie.organisateur.id) %}
+                    &nbsp;&nbsp;<a href="{{ path('sortie_delete', {'id': sortie.id}) }}" class="btn btn-danger">Annuler la sortie</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

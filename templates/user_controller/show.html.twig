@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-2-5">
+        <h1>Mon profil</h1>
+    </div>
+    <div class="pure-u-1-5"></div>
+    <br>
+    <br>
+    {{ include('user_controller/_form.html.twig') }}
+
+
+{% endblock %}

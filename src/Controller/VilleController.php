@@ -20,7 +20,7 @@ class VilleController extends AbstractController
      */
     public function index(VilleRepository $villeRepository): Response
     {
-        return $this->render('ville/index.html.twig', [
+        return $this->render('ville/home.html.twig', [
             'villes' => $villeRepository->findAll(),
         ]);
     }
@@ -39,7 +39,7 @@ class VilleController extends AbstractController
             $entityManager->persist($ville);
             $entityManager->flush();
 
-            return $this->redirectToRoute('ville_index');
+            return $this->redirectToRoute('lieu_new');
         }
 
         return $this->render('ville/new.html.twig', [

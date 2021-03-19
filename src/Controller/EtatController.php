@@ -20,7 +20,7 @@ class EtatController extends AbstractController
      */
     public function index(EtatRepository $etatRepository): Response
     {
-        return $this->render('etat/index.html.twig', [
+        return $this->render('etat/home.html.twig', [
             'etats' => $etatRepository->findAll(),
         ]);
     }
