@@ -28,7 +28,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findPseudosSortie(int $id)
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT pseudo,user_controller.nom,prenom FROM user_controller 
+        $sql = "SELECT * FROM user_controller 
             INNER JOIN user_controller_sortie ON user_controller.id=user_controller_sortie.user_controller_id
             INNER JOIN sortie ON user_controller_sortie.sortie_id=sortie.id
             WHERE sortie.id =:id";

@@ -79,7 +79,7 @@ class UserController implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=Sortie::class)
-     * 
+     *
      */
     private $user_sortie;
 
