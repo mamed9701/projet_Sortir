@@ -116,7 +116,7 @@
                         <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
                         {% if (app.user.id == sortie.organisateur.id) %}
                             <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
-                            <a href="">Annuler</a>
+                            {{ include('sortie/_cancel.html.twig') }}
                         {% endif %}
                         {% if (app.user.id != sortie.organisateur.id) %}
                             {% if (date() <= (sortie.dateCloture)) %}
