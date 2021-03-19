@@ -68,7 +68,7 @@ class SortieController extends AbstractController
             $result = $sortieRepository->findAll();
         } //si un ou plusieurs champ de recherche sélectionnés
         else {
-var_dump( $request->request->get('inscrit'));
+//var_dump( $request->request->get('inscrit'));
 
             $result = $sortieRepository->findByParameters(
                 $request->request->get('siteNom'),
@@ -79,8 +79,8 @@ var_dump( $request->request->get('inscrit'));
                 $request->request->get('inscrit') ? $this->getUser()->getId() : "",
                 $request->request->get('sortieEtatPassee')
             );
-var_dump($this->getUser()->getId());
-var_dump($request->request->get('inscrit') ? $this->getUser()->getId() : "");
+//var_dump($this->getUser()->getId());
+//var_dump($request->request->get('inscrit') ? $this->getUser()->getId() : "");
 
 //            // test du filtre organisateur : si coché alors
 //            if ($request->request->get('organisateur')) {
